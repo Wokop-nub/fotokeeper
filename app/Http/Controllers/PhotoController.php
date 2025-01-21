@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Photo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PhotoController extends Controller
 {
@@ -32,5 +33,22 @@ class PhotoController extends Controller
         $photo->save();
 
         return redirect('/index')->with('success', 'Фотография успешно загружена!');
+    }
+
+    public function destroy($id)
+    {
+        // Найти фотографию в базе данных по ID
+        $photo = Photo::findOrFail($id);
+
+        // Удалить файл из папки uploads
+        if (Storage::exists('uploads/' . $photo->filename)) {
+            Storage::delete('uploads/' . $photo->filename);
+        }
+
+        // Удалить запись из базы данных
+        $photo->delete();
+
+        // Вернуть успешный ответ
+        return response()->json(['message' => 'Фотография успешно удалена']);
     }
 }
