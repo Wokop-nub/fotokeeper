@@ -10,6 +10,8 @@
     <script src="/js/grid.js"></script>
     <script src="/js/upload.js" defer></script>
     <link rel="stylesheet" href="/css/gallery.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="/js/context-menu.js"></script>
 </head>
 
 <body>
@@ -68,6 +70,7 @@
 
             <button class="upload-button" type="button">загрузить</button>
 
+
         </form>
 
         <div class="grid-container">
@@ -76,7 +79,9 @@
                     <img src="{{ asset('uploads/' . $photo->filename) }}" alt="Photo">
                 </div>
             @endforeach
-
+            <div id="context-menu" class="context-menu hidden">
+                <button class="context-menu-item delete-photo">Удалить</button>
+            </div>
         </div>
 
     </main>

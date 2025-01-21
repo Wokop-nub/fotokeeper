@@ -34,3 +34,5 @@ Route::get('/shared', function () {
 });
 
 Route::post('/upload', [PhotoController::class, 'store'])->name('photos.store');
+
+Route::delete('/photos/{id}', [PhotoController::class, 'destroy'])->name('photos.destroy');

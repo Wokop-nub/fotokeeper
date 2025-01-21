@@ -69,3 +69,32 @@ form button:hover {
     height: 100%; /* Высота фотографии равна высоте контейнера */
     object-fit: contain; /* Вписать изображение без обрезки */
 }
+.context-menu {
+    position: absolute;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.context-menu.hidden {
+    display: none;
+}
+
+.context-menu-item {
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+}
+
+.context-menu-item:hover {
+    background-color: #f0f0f0;
+}
