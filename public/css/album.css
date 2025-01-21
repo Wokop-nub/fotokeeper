@@ -1,0 +1,132 @@
+/* Общие стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #4a4a4a;
+    color: #fff;
+    
+}
+
+/* Шапка */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 97px;
+    background-color: #000;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #ccc;
+}
+
+.nav {
+    display: flex;
+    gap: 140px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.albums-acrive , .photo-passive{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.albums-acrive{
+    color: #4a4a4a;
+}
+
+.nav-link.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Основная часть */
+.main {
+    padding: 20px;
+}
+
+/* Панель инструментов */
+.toolbar {
+    display: flex
+;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.icon-button {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.album-svicher{
+    background-color: #4a4a4a;
+    border: none;
+}
+.users-icon {
+    /* background-image: url('/img/my-albums.svg'); */
+    background-size: 60%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.create-album-button {
+    padding: 10px 80px;
+    /* background-color: #fff; */
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 23px;
+}
+
+/* Список альбомов */
+/* Список альбомов */
+.albums {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Два альбома в строке */
+    gap: 20px; /* Расстояние между альбомами */
+}
+
+.album {
+    text-decoration: none;
+    color: #fff;
+    text-align: center;
+}
+
+.fixed-thumbnail {
+    background-size: 17%;
+    background-repeat: no-repeat;
+    background-color: #fff;
+}
+.album-thumbnail {
+    height: 200px;
+    background-position: center;
+    border-radius: 5px;
+}
+
+.album-title {
+    margin-top: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+}
