@@ -75,12 +75,13 @@
 
         <div class="grid-container">
             @foreach ($photos as $photo)
-                <div class="photo-item">
-                    <img src="{{ asset('uploads/' . $photo->filename) }}" alt="Photo">
+                <div class="photo-item" oncontextmenu="return false;">
+                    <img src="{{ asset('uploads/' . $photo->filename) }}" alt="Photo" data-photo-id="{{ $photo->id }}">
                 </div>
             @endforeach
-            <div id="context-menu" class="context-menu hidden">
-                <button class="context-menu-item delete-photo">Удалить</button>
+            <div id="context-menu"
+                style="display: none; position: absolute; background: white; border: 1px solid #ccc; padding: 10px;">
+                <button id="delete-button">Удалить</button>
             </div>
         </div>
 

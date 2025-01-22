@@ -37,18 +37,17 @@ class PhotoController extends Controller
 
     public function destroy($id)
     {
-        // Найти фотографию в базе данных по ID
-        $photo = Photo::findOrFail($id);
+        $photo = Photo::find($id); // Предположим, что у вас есть модель Photo
+        if ($photo) {
+            // Удаляем файл из папки uploads
+            unlink(public_path('uploads/' . $photo->filename));
 
-        // Удалить файл из папки uploads
-        if (Storage::exists('uploads/' . $photo->filename)) {
-            Storage::delete('uploads/' . $photo->filename);
+            // Удаляем запись из базы данных
+            $photo->delete();
+
+            return response()->json(['success' => true]);
         }
 
-        // Удалить запись из базы данных
-        $photo->delete();
-
-        // Вернуть успешный ответ
-        return response()->json(['message' => 'Фотография успешно удалена']);
+        return response()->json(['success' => false]);
     }
 }
