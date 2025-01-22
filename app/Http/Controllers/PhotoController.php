@@ -50,4 +50,32 @@ class PhotoController extends Controller
 
         return response()->json(['success' => false]);
     }
+    public function update(Request $request, $id)
+    {
+        $photo = Photo::findOrFail($id);
+
+        // Получаем новое имя из запроса
+        $newFilename = $request->input('filename');
+
+        // Добавляем расширение файла, если оно отсутствует
+        if (!pathinfo($newFilename, PATHINFO_EXTENSION)) {
+            $newFilename .= '.' . pathinfo($photo->filename, PATHINFO_EXTENSION);
+        }
+
+        // Переименовываем файл на сервере
+        $oldPath = public_path('uploads/' . $photo->filename);
+        $newPath = public_path('uploads/' . $newFilename);
+        if (file_exists($oldPath)) {
+            rename($oldPath, $newPath);
+        }
+
+        // Обновляем запись в базе данных
+        $photo->filename = $newFilename;
+        $photo->save();
+
+        return response()->json([
+            'success' => true,
+            'newFilename' => $newFilename
+        ]);
+    }
 }

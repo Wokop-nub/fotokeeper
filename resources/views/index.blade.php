@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Фотографии</title>
     <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/gallery.css">
     <script src="/js/calendar.js"></script>
     <script src="/js/grid.js"></script>
     <script src="/js/upload.js" defer></script>
-    <link rel="stylesheet" href="/css/gallery.css">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="/js/context-menu.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -76,12 +76,21 @@
         <div class="grid-container">
             @foreach ($photos as $photo)
                 <div class="photo-item" oncontextmenu="return false;">
-                    <img src="{{ asset('uploads/' . $photo->filename) }}" alt="Photo" data-photo-id="{{ $photo->id }}">
+                    <img src="{{ asset('uploads/' . $photo->filename) }}" alt="Photo" data-photo-id="{{ $photo->id }}"
+                        title="{{ pathinfo($photo->filename, PATHINFO_FILENAME) }}">
                 </div>
             @endforeach
-            <div id="context-menu"
-                style="display: none; position: absolute; background: white; border: 1px solid #ccc; padding: 10px;">
-                <button id="delete-button">Удалить</button>
+            <div id="context-menu"> <button id="delete-button" class="context-menu-btn">удалить</button>
+                <button id="rename-button" class="context-menu-btn">переименовать</button>
+            </div>
+            <div id="rename-form-container">
+                <form id="rename-form" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" id="new-filename" name="filename" placeholder="Введите новое имя">
+                    <button type="submit">Сохранить</button>
+                    <button type="button" id="cancel-rename">Отмена</button>
+                </form>
             </div>
         </div>
 
