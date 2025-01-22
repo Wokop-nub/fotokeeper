@@ -10,8 +10,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Показываем контекстное меню при клике правой кнопкой мыши
     document.addEventListener('contextmenu', function(event) {
         event.preventDefault();
+
+        
         if (event.target.tagName === 'IMG') {
             selectedPhoto = event.target;
+            console.log('z nen');
             contextMenu.style.display = 'block';
             contextMenu.style.left = `${event.pageX}px`;
             contextMenu.style.top = `${event.pageY}px`;
@@ -58,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if (data.success) {
                 // Обновляем имя фотографии на странице
-                selectedPhoto.dataset.filename = data.newFilename;
+                selectedPhoto.dataset.newfilename = data.newFilename;
                 selectedPhoto.title = newFilename;
                 renameFormContainer.style.display = 'none'; // Скрываем форму переименования
                 alert('Фотография успешно переименована!');
@@ -86,4 +89,5 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => console.error('Error:', error));
         }
     });
+
 });

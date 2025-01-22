@@ -77,7 +77,8 @@
             @foreach ($photos as $photo)
                 <div class="photo-item" oncontextmenu="return false;">
                     <img src="{{ asset('uploads/' . $photo->filename) }}" alt="Photo" data-photo-id="{{ $photo->id }}"
-                        title="{{ pathinfo($photo->filename, PATHINFO_FILENAME) }}">
+                        data-filename="{{ $photo->filename }}">
+                    <div class="custom-tooltip">{{ pathinfo($photo->filename, PATHINFO_FILENAME) }}</div>
                 </div>
             @endforeach
             <div id="context-menu"> <button id="delete-button" class="context-menu-btn">удалить</button>
