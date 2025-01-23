@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мои альбомы</title>
     <link rel="stylesheet" href="/css/album.css">
+    <link rel="stylesheet" href="/css/album-context-menu.css">
 </head>
 
 <body>
@@ -30,45 +31,56 @@
 
         <div class="albums">
             @foreach ($albums as $album)
-                <a href="{{ route('album.show', $album->id) }}" class="album">
-                    <div class="album-thumbnail" data-album="{{ $album->id }}"
-                        style="background-image: url('{{ $album->photos->first() ? asset('uploads/' . $album->photos->first()->filename) : '/img/default-album.png' }}');">
-                    </div>
-                    <div class="album-title">{{ $album->name }}</div>
-                </a>
-                <!-- Форма удаления альбома -->
-                <form action="{{ route('album.destroy', $album->id) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit">Удалить</button>
-                </form>
+                <div class="album" data-album-id="{{ $album->id }}">
+                    <a href="{{ route('album.show', $album->id) }}">
+                        <div class="album-thumbnail"
+                            style="background-image: url('{{ $album->photos->first() ? asset('uploads/' . $album->photos->first()->filename) : '/img/default-album.svg' }}');">
+                        </div>
+                        <div class="album-title">{{ $album->name }}</div>
+                    </a>
+                </div>
             @endforeach
-        </div>
-        <!-- Модальное окно для создания альбома -->
-        <div id="create-album-modal" style="display: none;">
-            <form action="{{ route('album.store') }}" method="POST">
-                @csrf
-                <input type="text" name="name" placeholder="Название альбома" required>
-                <button type="submit">Создать</button>
-            </form>
-        </div>
+            <!-- Контекстное меню -->
+            <div id="context-menu"
+                style="display: none; position: absolute; background: white; border: 1px solid #ccc; padding: 10px;">
+                <button id="add-photo-button">Добавить фотографию</button>
+                <button id="rename-album-button">Переименовать альбом</button>
+                <button id="delete-album-button">Удалить альбом</button>
+            </div>
+            <!-- Альбом "Корзина" -->
+            <div class="album" data-album-id="{{ $trashAlbum->id }}">
+                <a href="{{ route('album.show', $trashAlbum->id) }}">
+                    <div class="album-thumbnail"
+                        style="background-image: url('{{ $trashAlbum->photos->first() ? asset('uploads/' . $trashAlbum->photos->first()->filename) : '/img/basket.svg' }}');">
+                    </div>
+                    <div class="album-title">{{ $trashAlbum->name }}</div>
+                </a>
+            </div>
+            <!-- Модальное окно для создания альбома -->
+            <div id="create-album-modal" style="display: none;">
+                <form action="{{ route('album.store') }}" method="POST">
+                    @csrf
+                    <input type="text" name="name" placeholder="Название альбома" required>
+                    <button type="submit">Создать</button>
+                </form>
+            </div>
 
-        <!-- Скрипт для открытия/закрытия модального окна -->
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const createAlbumButton = document.querySelector('.create-album-button');
-                const modal = document.getElementById('create-album-modal');
-                const closeModalButton = document.getElementById('close-modal');
+            <!-- Скрипт для открытия/закрытия модального окна -->
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const createAlbumButton = document.querySelector('.create-album-button');
+                    const modal = document.getElementById('create-album-modal');
+                    const closeModalButton = document.getElementById('close-modal');
 
-                createAlbumButton.addEventListener('click', () => {
-                    modal.style.display = 'block';
+                    createAlbumButton.addEventListener('click', () => {
+                        modal.style.display = 'block';
+                    });
+
+                    closeModalButton.addEventListener('click', () => {
+                        modal.style.display = 'none';
+                    });
                 });
-
-                closeModalButton.addEventListener('click', () => {
-                    modal.style.display = 'none';
-                });
-            });
-        </script>
+            </script>
     </main>
 
     {{-- Скрипт для подстановки последней фотографии --}}

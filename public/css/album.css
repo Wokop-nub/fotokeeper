@@ -103,7 +103,7 @@ body {
 /* Список альбомов */
 .albums {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Два альбома в строке */
+    grid-template-columns: repeat(2, 1fr); /* Два столбца */
     gap: 20px; /* Расстояние между альбомами */
 }
 
@@ -119,9 +119,10 @@ body {
     background-color: #fff;
 }
 .album-thumbnail {
-    height: 200px;
+    height: 250px;
     background-position: center;
-    border-radius: 5px;
+    border-radius: 7px;
+    width: 100%; /* Ширина будет автоматически подстраиваться под размеры сетки */
 }
 
 .album-title {
