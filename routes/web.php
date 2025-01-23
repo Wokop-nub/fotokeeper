@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PhotoController;
-
+use App\Http\Controllers\AlbumController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,3 +39,10 @@ Route::delete('/photos/{id}', [PhotoController::class, 'destroy'])->name('photos
 
 // Маршрут для обновления фотографии
 Route::put('/photos/{id}', [PhotoController::class, 'update'])->name('photos.update');
+
+
+// Маршруты для альбомов
+Route::get('/album', [AlbumController::class, 'index'])->name('album.index');
+Route::post('/album', [AlbumController::class, 'store'])->name('album.store');
+Route::get('/album/{album}', [AlbumController::class, 'show'])->name('album.show');
+Route::delete('/album/{album}', [AlbumController::class, 'destroy'])->name('album.destroy');

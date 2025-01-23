@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
@@ -14,8 +14,9 @@
         <nav class="nav">
             <a href="/index" class="nav-link photo-passive"><img src="/img/photo-icon-passive.svg"
                     alt="photo">фотографии</a>
-            <a href="/album" class="nav-link albums-acrive"><img src="/img/album-icon-active.svg"
-                    alt="albums">альбомы</a>
+            <a href="{{ route('album.index') }}" class="nav-link albums-acrive">
+                <img src="/img/album-icon-active.svg" alt="album">альбомы
+            </a>
         </nav>
     </header>
 
@@ -28,51 +29,59 @@
         </div>
 
         <div class="albums">
-            <!-- Альбом "Черно-белое" -->
-            <a href="album-black-white.html" class="album">
-                <div class="album-thumbnail" data-album="black-white" style="background-image: url('/img/gally4.png');">
-                </div>
-                <div class="album-title">Черно-белое</div>
-            </a>
-            <!-- Альбом "Природа" -->
-            <a href="album-nature.html" class="album">
-                <div class="album-thumbnail" data-album="nature" style="background-image: url('/img/gally3.png');">
-                </div>
-                <div class="album-title">Природа</div>
-            </a>
-            <!-- Альбом "Корзина" -->
-            <a href="album-trash.html" class="album">
-                <div class="album-thumbnail fixed-thumbnail" style="background-image: url('/img/basket.svg');">
-                </div>
-                <div class="album-title">Корзина</div>
-            </a>
+            @foreach ($albums as $album)
+                <a href="{{ route('album.show', $album->id) }}" class="album">
+                    <div class="album-thumbnail" data-album="{{ $album->id }}"
+                        style="background-image: url('{{ $album->photos->first() ? asset('uploads/' . $album->photos->first()->filename) : '/img/default-album.png' }}');">
+                    </div>
+                    <div class="album-title">{{ $album->name }}</div>
+                </a>
+                <!-- Форма удаления альбома -->
+                <form action="{{ route('album.destroy', $album->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">Удалить</button>
+                </form>
+            @endforeach
+        </div>
+        <!-- Модальное окно для создания альбома -->
+        <div id="create-album-modal" style="display: none;">
+            <form action="{{ route('album.store') }}" method="POST">
+                @csrf
+                <input type="text" name="name" placeholder="Название альбома" required>
+                <button type="submit">Создать</button>
+            </form>
         </div>
 
+        <!-- Скрипт для открытия/закрытия модального окна -->
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const createAlbumButton = document.querySelector('.create-album-button');
+                const modal = document.getElementById('create-album-modal');
+                const closeModalButton = document.getElementById('close-modal');
+
+                createAlbumButton.addEventListener('click', () => {
+                    modal.style.display = 'block';
+                });
+
+                closeModalButton.addEventListener('click', () => {
+                    modal.style.display = 'none';
+                });
+            });
+        </script>
     </main>
 
-    {{--
+    {{-- Скрипт для подстановки последней фотографии --}}
     <script>
-        // Скрипт для подстановки последней фотографии
         document.addEventListener('DOMContentLoaded', () => {
-            const albums = document.querySelectorAll('.album-thumbnail:not(.fixed-thumbnail)');
+            const albums = document.querySelectorAll('.album-thumbnail');
             albums.forEach(album => {
-                const albumType = album.getAttribute('data-album');
-                // Подставьте реальную логику загрузки последнего изображения альбома
-                let lastPhotoUrl = '';
-                switch (albumType) {
-                    case 'black-white':
-                        lastPhotoUrl = 'black-white.jpg'; // Последняя фотография черно-белого альбома
-                        break;
-                    case 'nature':
-                        lastPhotoUrl = 'nature.jpg'; // Последняя фотография альбома природы
-                        break;
-                    default:
-                        lastPhotoUrl = 'default.jpg'; // Если нет последней фотографии
-                }
-                album.style.backgroundImage = `url('${lastPhotoUrl}')`;
+                const albumId = album.getAttribute('data-album');
+                // Здесь можно добавить логику для динамической загрузки последней фотографии
             });
         });
-    </script> --}}
+    </script>
+
 </body>
 
 </html>

@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Album extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name']; // Поля, которые можно массово назначать
+
+    // Связь с фотографиями
+    public function photos()
+    {
+        return $this->hasMany(Photo::class);
+    }
 }
