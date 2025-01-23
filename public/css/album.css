@@ -112,7 +112,10 @@ body {
     color: #fff;
     text-align: center;
 }
-
+.album a{
+    text-decoration: none;
+    color: #fff;
+}
 .fixed-thumbnail {
     background-size: 17%;
     background-repeat: no-repeat;

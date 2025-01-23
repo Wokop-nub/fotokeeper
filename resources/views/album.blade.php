@@ -7,6 +7,7 @@
     <title>Мои альбомы</title>
     <link rel="stylesheet" href="/css/album.css">
     <link rel="stylesheet" href="/css/album-context-menu.css">
+    <script src="/js/album-context-menu.js"></script>
 </head>
 
 <body>
@@ -39,6 +40,7 @@
                         <div class="album-title">{{ $album->name }}</div>
                     </a>
                 </div>
+
             @endforeach
             <!-- Контекстное меню -->
             <div id="context-menu"
@@ -64,23 +66,23 @@
                     <button type="submit">Создать</button>
                 </form>
             </div>
+        </div>
+        <!-- Скрипт для открытия/закрытия модального окна -->
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const createAlbumButton = document.querySelector('.create-album-button');
+                const modal = document.getElementById('create-album-modal');
+                const closeModalButton = document.getElementById('close-modal');
 
-            <!-- Скрипт для открытия/закрытия модального окна -->
-            <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    const createAlbumButton = document.querySelector('.create-album-button');
-                    const modal = document.getElementById('create-album-modal');
-                    const closeModalButton = document.getElementById('close-modal');
-
-                    createAlbumButton.addEventListener('click', () => {
-                        modal.style.display = 'block';
-                    });
-
-                    closeModalButton.addEventListener('click', () => {
-                        modal.style.display = 'none';
-                    });
+                createAlbumButton.addEventListener('click', () => {
+                    modal.style.display = 'block';
                 });
-            </script>
+
+                closeModalButton.addEventListener('click', () => {
+                    modal.style.display = 'none';
+                });
+            });
+        </script>
     </main>
 
     {{-- Скрипт для подстановки последней фотографии --}}
