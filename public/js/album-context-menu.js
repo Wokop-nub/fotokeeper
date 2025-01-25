@@ -3,49 +3,69 @@ document.addEventListener('DOMContentLoaded', () => {
     const addPhotoButton = document.getElementById('add-photo-button');
     const renameAlbumButton = document.getElementById('rename-album-button');
     const deleteAlbumButton = document.getElementById('delete-album-button');
-
-    // Проверяем, что все элементы найдены
-    if (!contextMenu || !addPhotoButton || !renameAlbumButton || !deleteAlbumButton) {
-        console.error('Один или несколько элементов контекстного меню не найдены в DOM');
-        return;
-    }
+    const addPhotoMenu = document.getElementById('add-photo-menu');
+    const uploadFromDeviceButton = document.getElementById('upload-from-device');
+    const uploadFromAlbumButton = document.getElementById('upload-from-album');
+    const uploadFromPhotosButton = document.getElementById('upload-from-photos');
+    const cancelAddPhotoButton = document.getElementById('cancel-add-photo');
 
     let selectedAlbumId = null;
 
     // Показываем контекстное меню при клике правой кнопкой мыши
     document.addEventListener('contextmenu', (event) => {
         event.preventDefault();
-        console.log('Правый клик зарегистрирован'); // Проверка
-    
         if (event.target.closest('.album')) {
             selectedAlbumId = event.target.closest('.album').dataset.albumId;
-            console.log('Выбран альбом с ID:', selectedAlbumId); // Проверка
             contextMenu.style.display = 'block';
             contextMenu.style.left = `${event.pageX}px`;
             contextMenu.style.top = `${event.pageY}px`;
         }
     });
 
+    // Скрываем контекстное меню при клике вне его
     document.addEventListener('click', (event) => {
         if (!contextMenu.contains(event.target)) {
             contextMenu.style.display = 'none';
         }
     });
 
-    // Обработка кнопки "Добавить фотографию"
-    addPhotoButton.addEventListener('click', () => {
-        console.log('Кнопка "Добавить фотографию" нажата'); // Проверка
-        if (selectedAlbumId) {
-            alert(`Добавить фотографию в альбом с ID: ${selectedAlbumId}`);
-        }
+    // Обработка кнопки "Добавить фото"
+    addPhotoButton.addEventListener('click', (event) => {
+        event.stopPropagation();
+        addPhotoMenu.style.display = 'block';
+        addPhotoMenu.style.left = `${event.pageX}px`;
+        addPhotoMenu.style.top = `${event.pageY}px`;
     });
-    
+
+    // Обработка кнопки "Отмена" во вложенном меню
+    cancelAddPhotoButton.addEventListener('click', () => {
+        addPhotoMenu.style.display = 'none';
+    });
+
+    // Обработка кнопки "Загрузить с устройства"
+    uploadFromDeviceButton.addEventListener('click', () => {
+        console.log('Загрузить с устройства');
+        addPhotoMenu.style.display = 'none';
+    });
+
+    // Обработка кнопки "Загрузить с альбома"
+    uploadFromAlbumButton.addEventListener('click', () => {
+        console.log('Загрузить с альбома');
+        addPhotoMenu.style.display = 'none';
+    });
+
+    // Обработка кнопки "Загрузить из фото"
+    uploadFromPhotosButton.addEventListener('click', () => {
+        console.log('Загрузить из фото');
+        addPhotoMenu.style.display = 'none';
+    });
+
+    // Обработка кнопки "Переименовать альбом"
     renameAlbumButton.addEventListener('click', () => {
-        console.log('Кнопка "Переименовать альбом" нажата'); // Проверка
         if (selectedAlbumId) {
             const newName = prompt('Введите новое название альбома:');
             if (newName) {
-                fetch(`/album/${selectedAlbumId}`, {
+                fetch(`/album/${selectedAlbumId}/rename`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -56,18 +76,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        window.location.reload();
+                        const albumTitleElement = document.querySelector(`.album[data-album-id="${selectedAlbumId}"] .album-title`);
+                        if (albumTitleElement) {
+                            albumTitleElement.textContent = newName;
+                        }
+                        alert('Название альбома успешно изменено');
+                    } else {
+                        alert('Ошибка при изменении названия альбома');
                     }
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                    alert('Ошибка при изменении названия альбома');
                 });
             }
         }
     });
-    
+
+    // Обработка кнопки "Удалить альбом"
     deleteAlbumButton.addEventListener('click', () => {
-        console.log('Кнопка "Удалить альбом" нажата'); // Проверка
         if (selectedAlbumId) {
-            fetch(`/album/${selectedAlbumId}`, {
-                method: 'DELETE',
+            fetch(`/album/${selectedAlbumId}/move-to-trash`, {
+                method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 }
@@ -75,8 +105,18 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    window.location.reload();
+                    const albumElement = document.querySelector(`.album[data-album-id="${selectedAlbumId}"]`);
+                    if (albumElement) {
+                        albumElement.remove();
+                    }
+                    alert('Альбом перемещён в корзину');
+                } else {
+                    alert('Ошибка при перемещении альбома в корзину');
                 }
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                alert('Ошибка при перемещении альбома в корзину');
             });
         }
     });

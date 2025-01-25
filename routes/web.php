@@ -46,4 +46,13 @@ Route::get('/album', [AlbumController::class, 'index'])->name('album.index');
 Route::post('/album', [AlbumController::class, 'store'])->name('album.store');
 Route::get('/album/{album}', [AlbumController::class, 'show'])->name('album.show');
 Route::put('/album/{album}', [AlbumController::class, 'update'])->name('album.update');
-Route::delete('/album/{album}', [AlbumController::class, 'destroy'])->name('album.destroy');
+// Route::delete('/album/{album}', [AlbumController::class, 'destroy'])->name('album.destroy');
+
+// Переименование альбома
+Route::put('/album/{id}/rename', [AlbumController::class, 'rename'])->name('album.rename');
+
+// Перемещение альбома в корзину
+Route::post('/album/{id}/move-to-trash', [AlbumController::class, 'moveToTrash'])->name('album.moveToTrash');
+
+// Загрузка фотографий
+Route::post('/album/{id}/upload-photo', [AlbumController::class, 'uploadPhoto'])->name('album.uploadPhoto');

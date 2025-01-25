@@ -62,4 +62,49 @@ class AlbumController extends Controller
 
         return response()->json(['success' => true]);
     }
+    public function rename(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $album = Album::findOrFail($id);
+        $album->name = $request->input('name');
+        $album->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    // Перемещение альбома в корзину
+    public function moveToTrash(Request $request, $id)
+    {
+        $album = Album::findOrFail($id);
+        $album->is_trashed = true; // Предположим, что у вас есть поле is_trashed в таблице albums
+        $album->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    // Загрузка фотографии
+    public function uploadPhoto(Request $request, $id)
+    {
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Максимальный размер 2 МБ
+        ]);
+
+        if ($request->hasFile('photo')) {
+            $album = Album::findOrFail($id);
+            $path = $request->file('photo')->store('uploads', 'public'); // Сохраняем фото в папку storage/app/public/uploads
+
+            // Сохраняем информацию о фото в базе данных
+            $album->photos()->create([
+                'filename' => basename($path),
+                'path' => $path,
+            ]);
+
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Фото не загружено.']);
+    }
 }

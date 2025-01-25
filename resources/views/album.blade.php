@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="/css/album.css">
     <link rel="stylesheet" href="/css/album-context-menu.css">
     <script src="/js/album-context-menu.js"></script>
+    {{--
+    <script src="/js/album-delete-btn.js"></script>
+    <script src="/js/album-rename-btn.js"></script> --}}
 </head>
 
 <body>
@@ -46,9 +49,11 @@
             <div id="context-menu"
                 style="display: none; position: absolute; background: white; border: 1px solid #ccc; padding: 10px;">
                 <button id="add-photo-button">Добавить фотографию</button>
+
                 <button id="rename-album-button">Переименовать альбом</button>
                 <button id="delete-album-button">Удалить альбом</button>
             </div>
+
             <!-- Альбом "Корзина" -->
             <div class="album" data-album-id="{{ $trashAlbum->id }}">
                 <a href="{{ route('album.show', $trashAlbum->id) }}">
