@@ -56,7 +56,7 @@ class AlbumController extends Controller
             'id' => 'required|integer|min:1',
         ]);
 
-        $user = User::fund(Auth::id());
+        $user = User::find(Auth::id());
         $album = Album::query()
             ->where('id', $request->id)
             ->where('user_id', $user->id)
