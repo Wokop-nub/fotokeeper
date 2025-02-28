@@ -23,7 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/signin', [UserController::class, 'signin']);
-// Route::post('/edit', [UserController::class, 'edit']);
 
 Route::group(['prefix' => '/photo'], function () {
     Route::post('/upload', [PhotoController::class, 'create']);
@@ -32,17 +31,8 @@ Route::group(['prefix' => '/photo'], function () {
 });
 
 Route::group(['prefix' => '/album'], function () {
-    Route::post('/album', [AlbumController::class, 'store']);
-    Route::get('/album/{album}', [AlbumController::class, 'show']);
-    Route::put('/album/{album}', [AlbumController::class, 'update']);
-    // Route::delete('/album/{album}', [AlbumController::class, 'destroy'])->name('album.destroy');
+    Route::post('/create', [AlbumController::class, 'create']);
+    Route::put('/{id}/rename', [AlbumController::class, 'rename']);
+    Route::post('/{id}/move-to-trash', [AlbumController::class, 'moveToTrash']);
+    Route::post('/{id}/upload-photo', [AlbumController::class, 'uploadPhoto']);
 });
-
-// Переименование альбома
-Route::put('/album/{id}/rename', [AlbumController::class, 'rename']);
-
-// Перемещение альбома в корзину
-Route::post('/album/{id}/move-to-trash', [AlbumController::class, 'moveToTrash']);
-
-// Загрузка фотографий
-Route::post('/album/{id}/upload-photo', [AlbumController::class, 'uploadPhoto']);

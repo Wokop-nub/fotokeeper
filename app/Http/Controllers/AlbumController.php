@@ -5,60 +5,49 @@ namespace App\Http\Controllers;
 use App\Models\Album;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class AlbumController extends Controller
 {
     // Создание нового альбома
-    public function store(Request $request)
+    public function create(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'parent' => 'nullable|string|max:255',
         ]);
 
-        Album::create($request->only('name'));
-
-        return redirect()->route('album.index')->with('success', 'Альбом создан успешно!');
-    }
-
-    public function destroy(Album $album): Response
-    {
-        // Перемещаем альбом в корзину
-        $trashAlbum = Album::where('name', 'Корзина')->first();
-        if ($trashAlbum) {
-            $album->update(['album_id' => $trashAlbum->id]);
+        $parent_id = null;
+        if ($request->has('parent')) {
+            $parent_id = Album::query()
+                ->where('alias', $request->parent)
+                ->first()
+                ->id;
         }
 
-        return response(['success' => true]);
-    }
-    public function show(Album $album)
-    {
-        $photos = $album->photos;
-        return view('album_show', compact('album', 'photos')); // Используем album_show.blade.php
-    }
-    public function update(Request $request, Album $album): Response
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
+        Album::create([
+            'name' => $request->name,
+            'alias' => Str::slug($request->name),
+            'user_id' => Auth::user()->id,
+            'parent_id' => $parent_id
         ]);
 
-        $album->update($request->only('name'));
-
-        return response(['success' => true]);
+        return redirect('/')->with('success', 'Альбом создан успешно!');
     }
+
     public function rename(Request $request, $id): Response
     {
         $request->validate([
             'name' => 'required|string|max:255',
         ]);
 
-        $album = Album::findOrFail($id);
-        $album->name = $request->input('name');
-        $album->save();
+        $album = Album::find($id);
+        $album->update($request->only('name'));
 
         return response(['success' => true]);
     }
 
-    // Перемещение альбома в корзину
     public function moveToTrash(Request $request, $id): Response
     {
         $album = Album::findOrFail($id);
@@ -68,7 +57,6 @@ class AlbumController extends Controller
         return response(['success' => true]);
     }
 
-    // Загрузка фотографии
     public function uploadPhoto(Request $request, $id): Response
     {
         $request->validate([

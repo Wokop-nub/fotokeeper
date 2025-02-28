@@ -2,7 +2,7 @@
 @section('title')Мои альбомы@endsection
 @section('links')
     <link rel="stylesheet" href="/css/album-context-menu.css">
-    <script src="/js/album-context-menu.js"></script>
+    <script defer src="/js/album-context-menu.js"></script>
     {{-- <script src="/js/album-delete-btn.js"></script> --}}
     {{-- <script src="/js/album-rename-btn.js"></script> --}}
 @endsection
@@ -47,9 +47,11 @@
 
             <!-- Модальное окно для создания альбома -->
             <div id="create-album-modal" style="display: none;">
-                <form action="/album" method="POST">
-                    @csrf
+                <form action="/api/album/create" method="POST">
                     <input type="text" name="name" placeholder="Название альбома" required>
+                    @isset($parent)
+                        <input type="hidden" name="parent" value="{{$parent}}" readonly>
+                    @endisset
                     <button type="submit">Создать</button>
                 </form>
             </div>

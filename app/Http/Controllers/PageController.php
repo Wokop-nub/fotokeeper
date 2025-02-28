@@ -41,7 +41,7 @@ class PageController extends Controller
             ->where('alias', $alias)
             ->get();
 
-        return view('album');
+        return view('album', ['parent' => $alias]);
     }
 
     public function upload(): View
