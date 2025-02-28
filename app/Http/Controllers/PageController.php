@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 use App\Models\Album;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller

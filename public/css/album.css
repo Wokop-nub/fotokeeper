@@ -9,7 +9,6 @@ body {
     font-family: Arial, sans-serif;
     background-color: #4a4a4a;
     color: #fff;
-    
 }
 
 /* Шапка */
@@ -42,12 +41,13 @@ body {
     text-transform: uppercase;
     font-weight: 600;
 }
-.albums-acrive , .photo-passive{
+.albums-acrive,
+.photo-passive {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.albums-acrive{
+.albums-acrive {
     color: #4a4a4a;
 }
 
@@ -63,8 +63,7 @@ body {
 
 /* Панель инструментов */
 .toolbar {
-    display: flex
-;
+    display: flex;
     gap: 10px;
     margin-bottom: 20px;
     flex-direction: column;
@@ -78,7 +77,7 @@ body {
     border-radius: 5px;
     cursor: pointer;
 }
-.album-svicher{
+.album-svicher {
     background-color: #4a4a4a;
     border: none;
 }
@@ -112,7 +111,7 @@ body {
     color: #fff;
     text-align: center;
 }
-.album a{
+.album a {
     text-decoration: none;
     color: #fff;
 }
@@ -134,24 +133,38 @@ body {
     font-weight: bold;
     display: flex;
 }
-#create-album-modal {
+.modalka {
+    display: none;
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000085;
+
+    form {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        z-index: 1000;
+    }
 }
 
-#create-album-modal input {
+.modalka input {
     padding: 10px;
     margin-bottom: 10px;
     width: 100%;
 }
 
-#create-album-modal button {
+.modalka button {
     padding: 10px 20px;
     margin-right: 10px;
+}
+
+body.modalka-open {
+    overflow: hidden;
 }

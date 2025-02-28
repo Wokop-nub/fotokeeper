@@ -36,16 +36,17 @@ class AlbumController extends Controller
         return redirect('/')->with('success', 'Альбом создан успешно!');
     }
 
-    public function rename(Request $request, $id): Response
+    public function rename(Request $request): Response
     {
         $request->validate([
+            'id' => 'required|integer|min:1',
             'name' => 'required|string|max:255',
         ]);
 
-        $album = Album::find($id);
+        $album = Album::find($request->id);
         $album->update($request->only('name'));
 
-        return response(['success' => true]);
+        return response(['status' => true]);
     }
 
     public function moveToTrash(Request $request, $id): Response
@@ -54,7 +55,7 @@ class AlbumController extends Controller
         $album->is_trashed = true; // Предположим, что у вас есть поле is_trashed в таблице albums
         $album->save();
 
-        return response(['success' => true]);
+        return response(['status' => true]);
     }
 
     public function uploadPhoto(Request $request, $id): Response
@@ -75,6 +76,6 @@ class AlbumController extends Controller
             return response(['success' => true]);
         }
 
-        return response(['success' => false, 'message' => 'Фото не загружено.']);
+        return response(['status' => false, 'message' => 'Фото не загружено.']);
     }
 }

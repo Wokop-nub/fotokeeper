@@ -2,16 +2,18 @@
 @section('title')Мои альбомы@endsection
 @section('links')
     <link rel="stylesheet" href="/css/album-context-menu.css">
-    <script defer src="/js/album-context-menu.js"></script>
-    {{-- <script src="/js/album-delete-btn.js"></script> --}}
-    {{-- <script src="/js/album-rename-btn.js"></script> --}}
+    <script type="module" defer src="/js/modal.js"></script>
+    <script type="module" defer src="/js/album/album-context-menu.js"></script>
+    <script type="module" defer src="/js/album/album-delete-btn.js"></script>
+    <script type="module" defer src="/js/album/album-rename-btn.js"></script>
+    <script type="module" defer src="/js/album/album-rename-btn.js"></script>
 @endsection
 
 @section('mainContent')
     @include('block/header')
     <main class="main">
         <div class="toolbar">
-            <button class="create-album-button">создать альбом</button>
+            <button class="create-album-button openModalBtn" data-modal="create-album-modal">создать альбом</button>
         </div>
 
         <div class="albums">
@@ -50,16 +52,10 @@
             @endif
         </div>
 
-        <!-- Контекстное меню -->
-        <div id="context-menu" style="display: none; position: absolute; background: white; border: 1px solid #ccc; padding: 10px;">
-            <button id="add-photo-button">Добавить фотографию</button>
-
-            <button id="rename-album-button">Переименовать альбом</button>
-            <button id="delete-album-button">Удалить альбом</button>
-        </div>
+        @include('block/albumMenu')
 
         <!-- Модальное окно для создания альбома -->
-        <div id="create-album-modal" style="display: none;">
+        <div class='modalka' id="create-album-modal">
             <form action="/api/album/create" method="POST">
                 <input type="text" name="name" placeholder="Название альбома" required>
                 @isset($parent)
@@ -68,22 +64,5 @@
                 <button type="submit">Создать</button>
             </form>
         </div>
-
-        <!-- Скрипт для открытия/закрытия модального окна -->
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const createAlbumButton = document.querySelector('.create-album-button');
-                const modal = document.getElementById('create-album-modal');
-                const closeModalButton = document.getElementById('close-modal');
-
-                createAlbumButton.addEventListener('click', () => {
-                    modal.style.display = 'block';
-                });
-
-                closeModalButton.addEventListener('click', () => {
-                    modal.style.display = 'none';
-                });
-            });
-        </script>
     </main>
 @endsection
