@@ -1,28 +1,12 @@
-<!DOCTYPE html>
-<html lang="ru">
+@extends('block/pattern')
+@section('title'){{ $album->name }}@endsection
+@section('links')
+@endsection
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $album->name }}</title>
-    <link rel="stylesheet" href="/css/album.css"> <!-- Подключите ваш CSS-файл -->
-</head>
-
-<body>
-    <header class="header">
-        <img src="/img/logo.svg" alt="logo"> <!-- Логотип -->
-        <nav class="nav">
-            <a href="/index" class="nav-link photo-passive">
-                <img src="/img/photo-icon-passive.svg" alt="photo">фотографии
-            </a>
-            <a href="{{ route('album.index') }}" class="nav-link albums-acrive">
-                <img src="/img/album-icon-active.svg" alt="album">альбомы
-            </a>
-        </nav>
-    </header>
-
+@section('mainContent')
+    @include('block/header')
     <main class="main">
-        <h1>{{ $album->name }}</h1> <!-- Название альбома -->
+        <h1>{{ $album->name }}</h1>
 
         <!-- Список фотографий в альбоме -->
         <div class="photos">
@@ -31,23 +15,14 @@
             @else
                 @foreach ($photos as $photo)
                     <div class="photo">
-                        <img src="{{ asset('uploads/' . $photo->filename) }}" alt="Photo">
-                        <p>{{ $photo->name }}</p> <!-- Название фотографии -->
+                        <img src="/uploads/{{$photo->filename}}" alt="Photo">
+                        <p>{{ $photo->name }}</p>
                     </div>
                 @endforeach
             @endif
         </div>
 
         <!-- Кнопка для возврата к списку альбомов -->
-        <a href="{{ route('album.index') }}" class="back-button">Вернуться к альбомам</a>
+        <a href="/album" class="back-button">Вернуться к альбомам</a>
     </main>
-
-    <!-- Скрипты (если нужны) -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Здесь можно добавить JavaScript-логику, если требуется
-        });
-    </script>
-</body>
-
-</html>
+@endsection

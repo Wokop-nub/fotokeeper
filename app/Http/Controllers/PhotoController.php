@@ -9,17 +9,17 @@ use Illuminate\Support\Facades\Storage;
 class PhotoController extends Controller
 {
     // Отображение списка фотографий
-    public function index()
+    public function upload()
     {
         $photos = Photo::latest()->get(); // Загружаем все фотографии из базы
-        return view('index', compact('photos')); // Передаем их в шаблон
+        return view('upload', compact('photos')); // Передаем их в шаблон
     }
 
     // Обработка загрузки фотографий
-    public function store(Request $request)
+    public function create(Request $request)
     {
         $request->validate([
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Ограничиваем тип файла
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Сохранение файла на сервере
@@ -50,7 +50,7 @@ class PhotoController extends Controller
 
         return response()->json(['success' => false]);
     }
-    public function update(Request $request, $id)
+    public function rename(Request $request, $id)
     {
         $photo = Photo::findOrFail($id);
 

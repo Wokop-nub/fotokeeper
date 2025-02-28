@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Album;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class AlbumController extends Controller
 {
@@ -37,7 +38,7 @@ class AlbumController extends Controller
         return redirect()->route('album.index')->with('success', 'Альбом создан успешно!');
     }
 
-    public function destroy(Album $album)
+    public function destroy(Album $album): Response
     {
         // Перемещаем альбом в корзину
         $trashAlbum = Album::where('name', 'Корзина')->first();
@@ -45,14 +46,14 @@ class AlbumController extends Controller
             $album->update(['album_id' => $trashAlbum->id]);
         }
 
-        return response()->json(['success' => true]);
+        return response(['success' => true]);
     }
     public function show(Album $album)
     {
         $photos = $album->photos;
         return view('album_show', compact('album', 'photos')); // Используем album_show.blade.php
     }
-    public function update(Request $request, Album $album)
+    public function update(Request $request, Album $album): Response
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -60,9 +61,9 @@ class AlbumController extends Controller
 
         $album->update($request->only('name'));
 
-        return response()->json(['success' => true]);
+        return response(['success' => true]);
     }
-    public function rename(Request $request, $id)
+    public function rename(Request $request, $id): Response
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -72,21 +73,21 @@ class AlbumController extends Controller
         $album->name = $request->input('name');
         $album->save();
 
-        return response()->json(['success' => true]);
+        return response(['success' => true]);
     }
 
     // Перемещение альбома в корзину
-    public function moveToTrash(Request $request, $id)
+    public function moveToTrash(Request $request, $id): Response
     {
         $album = Album::findOrFail($id);
         $album->is_trashed = true; // Предположим, что у вас есть поле is_trashed в таблице albums
         $album->save();
 
-        return response()->json(['success' => true]);
+        return response(['success' => true]);
     }
 
     // Загрузка фотографии
-    public function uploadPhoto(Request $request, $id)
+    public function uploadPhoto(Request $request, $id): Response
     {
         $request->validate([
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Максимальный размер 2 МБ
@@ -99,12 +100,11 @@ class AlbumController extends Controller
             // Сохраняем информацию о фото в базе данных
             $album->photos()->create([
                 'filename' => basename($path),
-                'path' => $path,
             ]);
 
-            return response()->json(['success' => true]);
+            return response(['success' => true]);
         }
 
-        return response()->json(['success' => false, 'message' => 'Фото не загружено.']);
+        return response(['success' => false, 'message' => 'Фото не загружено.']);
     }
 }

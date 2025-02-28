@@ -18,41 +18,13 @@ use App\Http\Controllers\AlbumController;
 Route::get('/', function () {
     return view('welcome');
 });
-
 Route::get('/login', function () {
     return view('login');
 });
 Route::get('/signin', function () {
     return view('signin');
 });
-Route::get('/index', [PhotoController::class, 'index']);
-Route::get('/album', function () {
-    return view('album');
-});
-Route::get('/shared', function () {
-    return view('shared');
-});
 
-Route::post('/upload', [PhotoController::class, 'store'])->name('photos.store');
-
-Route::delete('/photos/{id}', [PhotoController::class, 'destroy'])->name('photos.destroy');
-
-// Маршрут для обновления фотографии
-Route::put('/photos/{id}', [PhotoController::class, 'update'])->name('photos.update');
-
-
-// Маршруты для альбомов
-Route::get('/album', [AlbumController::class, 'index'])->name('album.index');
-Route::post('/album', [AlbumController::class, 'store'])->name('album.store');
-Route::get('/album/{album}', [AlbumController::class, 'show'])->name('album.show');
-Route::put('/album/{album}', [AlbumController::class, 'update'])->name('album.update');
-// Route::delete('/album/{album}', [AlbumController::class, 'destroy'])->name('album.destroy');
-
-// Переименование альбома
-Route::put('/album/{id}/rename', [AlbumController::class, 'rename'])->name('album.rename');
-
-// Перемещение альбома в корзину
-Route::post('/album/{id}/move-to-trash', [AlbumController::class, 'moveToTrash'])->name('album.moveToTrash');
-
-// Загрузка фотографий
-Route::post('/album/{id}/upload-photo', [AlbumController::class, 'uploadPhoto'])->name('album.uploadPhoto');
+Route::get('/album', [AlbumController::class, 'index']);
+Route::get('/album/{album}', [AlbumController::class, 'index']);
+Route::get('/upload', [PhotoController::class, 'upload']);

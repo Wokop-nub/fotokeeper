@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\SupportController;
+use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PhotoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,4 +24,25 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/signin', [UserController::class, 'signin']);
 // Route::post('/edit', [UserController::class, 'edit']);
-Route::post('/photos/upload', [PhotoController::class, 'store'])->name('photos.store');
+
+Route::group(['prefix' => '/photo'], function () {
+    Route::post('/upload', [PhotoController::class, 'create']);
+    Route::delete('/photos/{id}', [PhotoController::class, 'destroy']);
+    Route::put('/photos/{id}', [PhotoController::class, 'rename']);
+});
+
+Route::group(['prefix' => '/album'], function () {
+    Route::post('/album', [AlbumController::class, 'store']);
+    Route::get('/album/{album}', [AlbumController::class, 'show']);
+    Route::put('/album/{album}', [AlbumController::class, 'update']);
+    // Route::delete('/album/{album}', [AlbumController::class, 'destroy'])->name('album.destroy');
+});
+
+// Переименование альбома
+Route::put('/album/{id}/rename', [AlbumController::class, 'rename']);
+
+// Перемещение альбома в корзину
+Route::post('/album/{id}/move-to-trash', [AlbumController::class, 'moveToTrash']);
+
+// Загрузка фотографий
+Route::post('/album/{id}/upload-photo', [AlbumController::class, 'uploadPhoto']);

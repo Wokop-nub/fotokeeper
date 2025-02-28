@@ -1,30 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Фотографии</title>
+@extends('block/pattern')
+@section('title')Фотографии@endsection
+@section('links')
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/gallery.css">
     <script src="/js/calendar.js"></script>
     <script src="/js/grid.js"></script>
     <script src="/js/upload.js" defer></script>
     <script src="/js/context-menu.js"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-</head>
+@endsection
 
-<body>
-    <header class="header">
-        <img src="/img/logo.svg" alt="logo">
-        <nav class="nav">
-            <a href="/index" class="nav-link photo-active"><img src="/img/photo-icon-active.svg"
-                    alt="photo">фотографии</a>
-            <a href="/album" class="nav-link albom-passive"><img src="/img/album-icon-passive.svg"
-                    alt="albom">альбомы</a>
-        </nav>
-    </header>
-
+@section('mainContent')
+    @include('block/header')
     <main class="main">
         <div class="toolbar">
             <div class="custom-select">
@@ -64,24 +50,21 @@
         </div>
         <form id="upload-form" action="{{ route('photos.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-
             <input type="file" id="photo-upload" name="photo" accept="image/*"
                 style="height: 0; width: 0; opacity: 0;" />
-
             <button class="upload-button" type="button">загрузить</button>
-
-
         </form>
 
         <div class="grid-container">
             @foreach ($photos as $photo)
                 <div class="photo-item" oncontextmenu="return false;">
-                    <img src="{{ asset('uploads/' . $photo->filename) }}" alt="Photo" data-photo-id="{{ $photo->id }}"
+                    <img src="/uploads/{{$photo->filename}}" alt="Photo" data-photo-id="{{ $photo->id }}"
                         data-filename="{{ $photo->filename }}">
                     <div class="custom-tooltip">{{ pathinfo($photo->filename, PATHINFO_FILENAME) }}</div>
                 </div>
             @endforeach
-            <div id="context-menu"> <button id="delete-button" class="context-menu-btn">удалить</button>
+            <div id="context-menu">
+                <button id="delete-button" class="context-menu-btn">удалить</button>
                 <button id="rename-button" class="context-menu-btn">переименовать</button>
             </div>
             <div id="rename-form-container">
@@ -96,8 +79,4 @@
         </div>
 
     </main>
-
-
-</body>
-
-</html>
+@endsection
