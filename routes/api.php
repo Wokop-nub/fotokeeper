@@ -34,5 +34,5 @@ Route::group(['prefix' => '/album'], function () {
     Route::post('/create', [AlbumController::class, 'create']);
     Route::put('/rename', [AlbumController::class, 'rename']);
     Route::post('/move-to-trash', [AlbumController::class, 'moveToTrash']);
-    Route::post('/upload-photo', [AlbumController::class, 'uploadPhoto']);
+    Route::post('/upload', [AlbumController::class, 'uploadPhoto']);
 });

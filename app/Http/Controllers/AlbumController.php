@@ -69,24 +69,23 @@ class AlbumController extends Controller
         return response(['status' => true]);
     }
 
-    public function uploadPhoto(Request $request, $id): Response
+    public function uploadPhoto(Request $request): Response
     {
         $request->validate([
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Максимальный размер 2 МБ
+            'id' => 'required|integer|min:1',
+            'file.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Максимальный размер 2 МБ
         ]);
 
-        if ($request->hasFile('photo')) {
-            $album = Album::findOrFail($id);
-            $path = $request->file('photo')->store('uploads', 'public'); // Сохраняем фото в папку storage/app/public/uploads
+        $album = Album::find($request->id);
+        foreach ($request->file('file') as $file) {
+            // Сохраняем файл в папку storage/app/public/uploads
+            $path = $file->store('uploads', 'public');
 
-            // Сохраняем информацию о фото в базе данных
+            // Создаем запись о файле в базе данных
             $album->photos()->create([
-                'filename' => basename($path),
+                'filename' => basename($path), // Сохраняем имя файла
             ]);
-
-            return response(['success' => true]);
         }
-
-        return response(['status' => false, 'message' => 'Фото не загружено.']);
+        return response(['status' => true]);
     }
 }

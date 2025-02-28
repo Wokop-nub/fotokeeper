@@ -1,8 +1,10 @@
 import { renameAlbum } from "./album-rename.js";
 import { deleteAlbum } from "./album-delete.js";
+import { uploadFile } from "./album-upload.js";
 const contextMenu = document.getElementById("context-menu");
 const renameForm = document.querySelector("#rename-album");
 const deleteForm = document.querySelector("#delete-album");
+const uploadForm = document.querySelector("#upload-album");
 
 let selectedAlbumId = null;
 
@@ -38,4 +40,8 @@ renameForm.addEventListener("submit", (event) => {
 deleteForm.addEventListener("submit", (event) => {
     event.preventDefault();
     deleteAlbum(selectedAlbumId);
+});
+uploadForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    uploadFile(uploadForm, selectedAlbumId);
 });

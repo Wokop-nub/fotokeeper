@@ -5,9 +5,9 @@
     <link rel="stylesheet" href="/css/album-context-menu.css">
     <script type="module" defer src="/js/modal.js"></script>
     <script type="module" defer src="/js/album/album-context-menu.js"></script>
-    <script type="module" defer src="/js/album/album-delete-btn.js"></script>
-    <script type="module" defer src="/js/album/album-rename-btn.js"></script>
-    <script type="module" defer src="/js/album/album-rename-btn.js"></script>
+    <script type="module" defer src="/js/album/album-delete.js"></script>
+    <script type="module" defer src="/js/album/album-rename.js"></script>
+    <script type="module" defer src="/js/album/album-upload.js"></script>
 @endsection
 
 @section('mainContent')
@@ -27,7 +27,7 @@
                     <div class="album" data-album-id="{{ $album->id }}">
                         <a href="/album/{{$album->alias}}">
                             <div class="album-thumbnail"
-                                style="background-image: url('{{ $album->photos->first() ? asset('uploads/' . $album->photos->first()->filename) : '/img/default-album.svg' }}');">
+                                style="background-image: url('{{ $album->photos->first() ? '/storage/uploads/' . $album->photos->first()->filename : '/img/default-album.svg' }}');">
                             </div>
                             <div class="album-title">{{ $album->name }}</div>
                         </a>
@@ -37,7 +37,7 @@
                 @isset($photos)
                     @foreach ($photos as $photo)
                         <div class="photo">
-                            <img src="{{ asset('uploads/' . $photo->filename) }}" alt="Photo">
+                            <img src="/storage/uploads/{{$photo->filename}}" alt="Photo">
                             <p>{{ $photo->name }}</p> <!-- Название фотографии -->
                         </div>
                     @endforeach
