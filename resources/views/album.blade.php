@@ -8,6 +8,7 @@
     <script type="module" defer src="/js/album/album-delete.js"></script>
     <script type="module" defer src="/js/album/album-rename.js"></script>
     <script type="module" defer src="/js/album/album-upload.js"></script>
+    <script defer src="/js/album/create.js"></script>
 @endsection
 
 @section('mainContent')
@@ -62,7 +63,7 @@
 
         <!-- Модальное окно для создания альбома -->
         <div class='modalka' id="create-album-modal">
-            <form action="/api/album/create" method="POST">
+            <form action="/api/album/create" method="POST" id="create-album-form">
                 <input type="text" name="name" placeholder="Название альбома" required>
                 @isset($alias)
                     <input type="hidden" name="parent" value="{{$alias}}" readonly>

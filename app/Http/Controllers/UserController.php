@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SigninRequest;
+use App\Models\Album;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class UserController extends Controller
@@ -23,6 +25,13 @@ class UserController extends Controller
 
         $user = User::create($data);
         Auth::login($user);
+
+        Album::create([
+            'name' => 'Корзина',
+            'alias' => $user->name . '_trash',
+            'user_id' => Auth::user()->id,
+            'parent_id' => null
+        ]);
 
         return response(['status' => true], 200);
     }
