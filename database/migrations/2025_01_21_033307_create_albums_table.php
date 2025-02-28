@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('albums', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('parent_id')->nullable()->constrained('albums')->cascadeOnDelete();
             $table->string('name');
-            $table->timestamps();
         });
     }
 

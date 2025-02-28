@@ -4,15 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Photo extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['filename', 'name', 'album_id']; // Поля, которые можно массово назначать
+    protected $fillable = [
+        'album_id',
+        'filename',
+    ];
 
     // Связь с альбомом
-    public function album()
+    public function album(): BelongsTo
     {
         return $this->belongsTo(Album::class);
     }
