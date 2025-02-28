@@ -96,6 +96,7 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* Два столбца */
     gap: 20px; /* Расстояние между альбомами */
+    width: 100%;
 }
 
 .album {
@@ -117,6 +118,39 @@ body {
     background-position: center;
     border-radius: 7px;
     width: 100%; /* Ширина будет автоматически подстраиваться под размеры сетки */
+}
+.photo {
+    position: relative;
+
+    max-height: 250px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: inherit;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        filter: blur(10px);
+        z-index: 0;
+    }
+
+    img {
+        height: 100%;
+        z-index: 1;
+    }
 }
 
 .album-title {

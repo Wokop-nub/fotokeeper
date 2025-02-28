@@ -36,9 +36,9 @@
 
                 @isset($photos)
                     @foreach ($photos as $photo)
-                        <div class="photo">
-                            <img src="/storage/uploads/{{$photo->filename}}" alt="Photo">
-                            <p>{{ $photo->name }}</p> <!-- Название фотографии -->
+                        <div class="photo"
+                            style="background-image: url('/storage/uploads/{{$photo->filename}}')">
+                            <img src="/storage/uploads/{{$photo->filename}}" alt="">
                         </div>
                     @endforeach
                 @endisset
