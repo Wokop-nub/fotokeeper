@@ -1,6 +1,8 @@
-import { renameAlbum } from "./album-rename-btn.js";
+import { renameAlbum } from "./album-rename.js";
+import { deleteAlbum } from "./album-delete.js";
 const contextMenu = document.getElementById("context-menu");
 const renameForm = document.querySelector("#rename-album");
+const deleteForm = document.querySelector("#delete-album");
 
 let selectedAlbumId = null;
 
@@ -32,4 +34,8 @@ contextMenu.querySelectorAll("button").forEach((btn) => {
 renameForm.addEventListener("submit", (event) => {
     event.preventDefault();
     renameAlbum(renameForm, selectedAlbumId);
+});
+deleteForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    deleteAlbum(selectedAlbumId);
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Album;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -49,11 +50,21 @@ class AlbumController extends Controller
         return response(['status' => true]);
     }
 
-    public function moveToTrash(Request $request, $id): Response
+    public function moveToTrash(Request $request): Response
     {
-        $album = Album::findOrFail($id);
-        $album->is_trashed = true; // Предположим, что у вас есть поле is_trashed в таблице albums
-        $album->save();
+        $request->validate([
+            'id' => 'required|integer|min:1',
+        ]);
+
+        $user = Auth::user();
+        $album = Album::query()
+            ->where('id', $request->id)
+            ->where('user_id', $user->id)
+            ->first();
+
+        $album->update([
+            'parent_id' => $user->trashId()
+        ]);
 
         return response(['status' => true]);
     }

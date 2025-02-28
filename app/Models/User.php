@@ -41,4 +41,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Album::class);
     }
+
+    public function trashId(): int
+    {
+        return $this->albums()
+            ->where('name', 'Корзина')
+            ->first()
+            ->id;
+    }
 }
