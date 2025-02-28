@@ -8,14 +8,6 @@ use Illuminate\Support\Facades\Storage;
 
 class PhotoController extends Controller
 {
-    // Отображение списка фотографий
-    public function upload()
-    {
-        $photos = Photo::latest()->get(); // Загружаем все фотографии из базы
-        return view('upload', compact('photos')); // Передаем их в шаблон
-    }
-
-    // Обработка загрузки фотографий
     public function create(Request $request)
     {
         $request->validate([

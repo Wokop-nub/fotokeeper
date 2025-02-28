@@ -8,24 +8,6 @@ use Illuminate\Http\Response;
 
 class AlbumController extends Controller
 {
-    // Отображение списка альбомов
-    public function index()
-    {
-        // Получаем все альбомы, кроме корзины
-        $albums = Album::where('name', '!=', 'Корзина')->with('photos')->get();
-
-        // Получаем альбом "Корзина"
-        $trashAlbum = Album::where('name', 'Корзина')->with('photos')->first();
-
-        // Если альбом "Корзина" не существует, создаём его
-        if (!$trashAlbum) {
-            $trashAlbum = Album::create(['name' => 'Корзина']);
-        }
-
-        // Передаём оба набора данных в представление
-        return view('album', compact('albums', 'trashAlbum'));
-    }
-
     // Создание нового альбома
     public function store(Request $request)
     {

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,16 +16,14 @@ use App\Http\Controllers\AlbumController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [PageController::class, 'index']);
 Route::get('/login', function () {
-    return view('login');
+    return view('auth/login');
 });
 Route::get('/signin', function () {
-    return view('signin');
+    return view('auth/signin');
 });
 
-Route::get('/album', [AlbumController::class, 'index']);
-Route::get('/album/{album}', [AlbumController::class, 'index']);
-Route::get('/upload', [PhotoController::class, 'upload']);
+Route::get('/album', [PageController::class, 'mainAlbum']);
+Route::get('/album/{alias}', [PageController::class, 'album']);
+Route::get('/upload', [PageController::class, 'upload']);

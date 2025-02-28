@@ -14,7 +14,8 @@ class Album extends Model
     protected $fillable = [
         'user_id',
         'parent_id',
-        'name'
+        'name',
+        'alias'
     ];
 
     // Связи

@@ -17,7 +17,7 @@
         <div class="albums">
             @foreach ($albums as $album)
                 <div class="album" data-album-id="{{ $album->id }}">
-                    <a href="/album/{{$album->id}}">
+                    <a href="/album/{{$album->alias}}">
                         <div class="album-thumbnail"
                             style="background-image: url('{{ $album->photos->first() ? asset('uploads/' . $album->photos->first()->filename) : '/img/default-album.svg' }}');">
                         </div>
@@ -27,13 +27,15 @@
             @endforeach
 
             <!-- Альбом "Корзина" -->
-            <div class="album" data-album-id="{{ $trashAlbum->id }}">
-                <a href="/album/{{$trashAlbum->id}}">
-                    <div class="album-thumbnail" style="background-image: url('/img/basket.svg');">
-                    </div>
-                    <div class="album-title">{{ $trashAlbum->name }}</div>
-                </a>
-            </div>
+            @isset($trashAlbum)
+                <div class="album" data-album-id="{{ $trashAlbum->id }}">
+                    <a href="/album/{{$trashAlbum->alias}}">
+                        <div class="album-thumbnail" style="background-image: url('/img/basket.svg');">
+                        </div>
+                        <div class="album-title">{{ $trashAlbum->name }}</div>
+                    </a>
+                </div>
+            @endisset
 
             <!-- Контекстное меню -->
             <div id="context-menu" style="display: none; position: absolute; background: white; border: 1px solid #ccc; padding: 10px;">

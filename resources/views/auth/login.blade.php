@@ -7,7 +7,7 @@
     <title>Авторизация</title>
     <link rel="stylesheet" href="/css/signin.css">
     <link rel="stylesheet" href="/css/login.css">
-    <script src="/js/login.js" defer></script>
+    <script src="/js/auth/login.js" defer></script>
 </head>
 
 <body>

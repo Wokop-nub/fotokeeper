@@ -7,7 +7,7 @@
     <title>Регистрация</title>
     <link rel="stylesheet" href="/css/signin.css">
     <link rel="stylesheet" href="/css/login.css">
-    <script src="/js/signin.js" defer></script>
+    <script src="/js/auth/signin.js" defer></script>
 
 </head>
 

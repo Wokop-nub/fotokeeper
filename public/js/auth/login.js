@@ -1,5 +1,5 @@
 document
-    .getElementById("signin")
+    .getElementById("login")
     .addEventListener("submit", async function (event) {
         event.preventDefault(); // Предотвращаем стандартное поведение формы
 
@@ -8,7 +8,7 @@ document
         const data = Object.fromEntries(formData.entries());
 
         // Отправляем запрос на сервер
-        const response = await fetch("/api/signin", {
+        const response = await fetch("/api/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -20,7 +20,7 @@ document
 
         if (result.status == true) {
             // Успешная отправка
-            window.location.href = "/index";
+            window.location.href = "/";
         } else {
             // Обрабатываем ошибки валидации
             alert(result.message);

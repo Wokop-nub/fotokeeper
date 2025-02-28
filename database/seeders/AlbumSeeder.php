@@ -17,7 +17,8 @@ class AlbumSeeder extends Seeder
             [
                 'user_id' => 1,
                 'parent_id' => null,
-                'name' => 'Корзина'
+                'name' => 'Корзина',
+                'alias' => 'test_trash'
             ]
         ]);
     }
