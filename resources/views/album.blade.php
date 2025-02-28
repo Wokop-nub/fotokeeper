@@ -1,6 +1,7 @@
 @extends('block/pattern')
 @section('title')Мои альбомы@endsection
 @section('links')
+    <link rel="stylesheet" href="/css/album.css">
     <link rel="stylesheet" href="/css/album-context-menu.css">
     <script type="module" defer src="/js/modal.js"></script>
     <script type="module" defer src="/js/album/album-context-menu.js"></script>
@@ -10,7 +11,9 @@
 @endsection
 
 @section('mainContent')
-    @include('block/header')
+    @include('block/header', [
+        'active'=>2
+    ])
     <main class="main">
         <div class="toolbar">
             <button class="create-album-button openModalBtn" data-modal="create-album-modal">создать альбом</button>

@@ -19,13 +19,13 @@ body {
     padding: 10px 97px;
     background-color: #000;
 }
-.photo-active{
+.photo-active {
     display: flex;
     flex-direction: column;
     align-items: center;
     color: #696969;
 }
-.albom-passive{
+.albom-passive {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -47,10 +47,16 @@ body {
 
 .nav-link {
     text-decoration: none;
-    /* color: #fff; */
+    color: #fff;
     font-size: 16px;
     text-transform: uppercase;
     font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.nav-link.active {
+    color: #4a4a4a;
 }
 
 /* Основная часть */
@@ -118,82 +124,26 @@ body {
 
 /* Основной контейнер */
 .custom-select {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
 /* Текущая выбранная картинка */
 .select-toggle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
-.select-toggle img {
-  width: 100%; /* Изображение будет полностью заполнять блок */
-  max-height: 60px; /* Ограничение по высоте */
-  object-fit: contain;
-}
-
-/* Выпадающий список */
-.select-dropdown {
-  display: none; /* Скрыт по умолчанию */
-  position: absolute;
-  top: 60px; /* Расположение ниже выбранной картинки */
-  left: 0;
-  background: white;
-  border: 1px solid #ccc;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  z-index: 10;
-}
-
-/* Элементы внутри выпадающего списка */
-.select-option {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  cursor: pointer;
-  gap: 10px;
-  color: #4a4a4a;
-}
-
-.select-option:hover {
-  background: #f0f0f0;
-}
-
-/* Картинки в выпадающем списке */
-.select-option img {
-  width: 30px; /* Размер картинки */
-  height: 30px;
-  object-fit: contain;
-}
-
-/* стили для grid */
-
-.custom-select-grid {
-    position: relative;
-    display: inline-block;
-    width: 68px; /* Ширина кастомного select */
-  }
-  
-  /* Текущая выбранная картинка */
-  .select-toggle-grid {
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-  }
-  
-  .select-toggle-grid img {
+}
+
+.select-toggle img {
     width: 100%; /* Изображение будет полностью заполнять блок */
     max-height: 60px; /* Ограничение по высоте */
     object-fit: contain;
-  }
-  
-  /* Выпадающий список */
-  .select-dropdown-grid {
+}
+
+/* Выпадающий список */
+.select-dropdown {
     display: none; /* Скрыт по умолчанию */
     position: absolute;
     top: 60px; /* Расположение ниже выбранной картинки */
@@ -203,25 +153,81 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     z-index: 10;
-  }
-  
-  /* Элементы внутри выпадающего списка */
-  .select-option-grid {
+}
+
+/* Элементы внутри выпадающего списка */
+.select-option {
     display: flex;
     align-items: center;
     padding: 10px;
     cursor: pointer;
     gap: 10px;
     color: #4a4a4a;
-  }
-  
-  .select-option-grid:hover {
+}
+
+.select-option:hover {
     background: #f0f0f0;
-  }
-  
-  /* Картинки в выпадающем списке */
-  .select-option-grid img {
+}
+
+/* Картинки в выпадающем списке */
+.select-option img {
     width: 30px; /* Размер картинки */
     height: 30px;
     object-fit: contain;
-  }
+}
+
+/* стили для grid */
+
+.custom-select-grid {
+    position: relative;
+    display: inline-block;
+    width: 68px; /* Ширина кастомного select */
+}
+
+/* Текущая выбранная картинка */
+.select-toggle-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.select-toggle-grid img {
+    width: 100%; /* Изображение будет полностью заполнять блок */
+    max-height: 60px; /* Ограничение по высоте */
+    object-fit: contain;
+}
+
+/* Выпадающий список */
+.select-dropdown-grid {
+    display: none; /* Скрыт по умолчанию */
+    position: absolute;
+    top: 60px; /* Расположение ниже выбранной картинки */
+    left: 0;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    z-index: 10;
+}
+
+/* Элементы внутри выпадающего списка */
+.select-option-grid {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    gap: 10px;
+    color: #4a4a4a;
+}
+
+.select-option-grid:hover {
+    background: #f0f0f0;
+}
+
+/* Картинки в выпадающем списке */
+.select-option-grid img {
+    width: 30px; /* Размер картинки */
+    height: 30px;
+    object-fit: contain;
+}

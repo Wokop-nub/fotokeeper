@@ -10,7 +10,9 @@
 @endsection
 
 @section('mainContent')
-    @include('block/header')
+    @include('block/header', [
+        'active'=>1
+    ])
     <main class="main">
         <div class="toolbar">
             <div class="custom-select">
@@ -48,7 +50,7 @@
                 </div>
             </div>
         </div>
-        <form id="upload-form" action="{{ route('photos.store') }}" method="POST" enctype="multipart/form-data">
+        <form id="upload-form" action="/api" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="file" id="photo-upload" name="photo" accept="image/*"
                 style="height: 0; width: 0; opacity: 0;" />
@@ -56,13 +58,15 @@
         </form>
 
         <div class="grid-container">
-            @foreach ($photos as $photo)
-                <div class="photo-item" oncontextmenu="return false;">
-                    <img src="/uploads/{{$photo->filename}}" alt="Photo" data-photo-id="{{ $photo->id }}"
-                        data-filename="{{ $photo->filename }}">
-                    <div class="custom-tooltip">{{ pathinfo($photo->filename, PATHINFO_FILENAME) }}</div>
-                </div>
-            @endforeach
+            @isset($photos)
+                @foreach ($photos as $photo)
+                    <div class="photo-item" oncontextmenu="return false;">
+                        <img src="/uploads/{{$photo->filename}}" alt="Photo" data-photo-id="{{ $photo->id }}"
+                            data-filename="{{ $photo->filename }}">
+                        <div class="custom-tooltip">{{ pathinfo($photo->filename, PATHINFO_FILENAME) }}</div>
+                    </div>
+                @endforeach
+            @endisset
             <div id="context-menu">
                 <button id="delete-button" class="context-menu-btn">удалить</button>
                 <button id="rename-button" class="context-menu-btn">переименовать</button>
