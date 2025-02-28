@@ -32,16 +32,33 @@ class PageController extends Controller
         return view('album', ['albums' => $albums, 'trashAlbum' => $trash]);
     }
 
-    public function album(string $alias = null): View
+    public function album(string $path): View
     {
-        $parent = Album::query()
-            ->where('user_id', Auth::user()->id)
-            ->where('alias', $alias)
-            ->first();
-        $albums = $parent->child()->get();
-        $photos = $parent->photos()->get();
+        $segments = explode('/', $path);
+        if (count($segments) >= 2) {
+            $parent = Album::query()
+                ->where('user_id', Auth::id())
+                ->where('alias', $segments[0])
+                ->first();
+            $photos = null;
 
-        return view('album', ['parent' => $alias, 'albums' => $albums, 'photos' => $photos]);
+            for ($i = 1; $i < count($segments); $i++) {
+                $parent = $parent->child()
+                    ->where('alias', $segments[$i])
+                    ->first();
+                $albums = $parent->child()->get();
+                $photos = $parent->photos()->get();
+            }
+        } else {
+            $parent = Album::query()
+                ->where('user_id', Auth::user()->id)
+                ->where('alias', $segments[0])
+                ->first();
+            $albums = $parent->child()->get();
+            $photos = $parent->photos()->get();
+        }
+
+        return view('album', ['alias' => last($segments), 'albums' => $albums, 'photos' => $photos]);
     }
 
     public function upload(): View

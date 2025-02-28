@@ -23,5 +23,5 @@ Route::get('/signin', function () {
 });
 
 Route::get('/album', [PageController::class, 'mainAlbum']);
-Route::get('/album/{alias}', [PageController::class, 'album']);
+Route::get('/album/{path?}', [PageController::class, 'album'])->where('path', '.*');
 Route::get('/upload', [PageController::class, 'upload']);

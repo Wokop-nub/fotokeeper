@@ -16,6 +16,9 @@
     ])
     <main class="main">
         <div class="toolbar">
+            @isset($alias)
+                <a href="{{ '/' . implode('/', array_slice(explode('/', request()->path()), 0, -1)) }}" class="create-album-button">Назад</a>
+            @endisset
             <button class="create-album-button openModalBtn" data-modal="create-album-modal">создать альбом</button>
         </div>
 
@@ -25,7 +28,7 @@
             @else
                 @foreach ($albums as $album)
                     <div class="album" data-album-id="{{ $album->id }}">
-                        <a href="/album/{{$album->alias}}">
+                        <a href="{{ request()->url().'/'.$album->alias }}">
                             <div class="album-thumbnail"
                                 style="background-image: url('{{ $album->photos->first() ? '/storage/uploads/' . $album->photos->first()->filename : '/img/default-album.svg' }}');">
                             </div>
@@ -61,8 +64,8 @@
         <div class='modalka' id="create-album-modal">
             <form action="/api/album/create" method="POST">
                 <input type="text" name="name" placeholder="Название альбома" required>
-                @isset($parent)
-                    <input type="hidden" name="parent" value="{{$parent}}" readonly>
+                @isset($alias)
+                    <input type="hidden" name="parent" value="{{$alias}}" readonly>
                 @endisset
                 <button type="submit">Создать</button>
             </form>

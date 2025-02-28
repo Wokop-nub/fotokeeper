@@ -58,7 +58,7 @@ body {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
 }
 
@@ -82,7 +82,8 @@ body {
 
 .create-album-button {
     padding: 10px 80px;
-    /* background-color: #fff; */
+    background-color: #fff;
+    text-decoration: none;
     color: #000;
     border: none;
     border-radius: 5px;
