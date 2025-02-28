@@ -39,9 +39,11 @@ class PageController extends Controller
         $parent = Album::query()
             ->where('user_id', Auth::user()->id)
             ->where('alias', $alias)
-            ->get();
+            ->first();
+        $albums = $parent->child()->get();
+        $photos = $parent->photos()->get();
 
-        return view('album', ['parent' => $alias]);
+        return view('album', ['parent' => $alias, 'albums' => $albums, 'photos' => $photos]);
     }
 
     public function upload(): View
