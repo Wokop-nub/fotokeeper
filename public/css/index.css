@@ -68,6 +68,7 @@ body {
 .toolbar {
     display: flex;
     align-items: center;
+    justify-content: start;
     gap: 25px;
     margin-bottom: 20px;
 }
@@ -107,12 +108,13 @@ body {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-}
 
-.select-toggle img {
-    width: 100%; /* Изображение будет полностью заполнять блок */
-    max-height: 60px; /* Ограничение по высоте */
-    object-fit: contain;
+    img {
+        width: 100%;
+        min-width: 60px;
+        max-height: 60px;
+        object-fit: contain;
+    }
 }
 
 /* Выпадающий список */
@@ -136,17 +138,16 @@ body {
     cursor: pointer;
     gap: 10px;
     color: #4a4a4a;
+
+    img {
+        width: 30px; /* Размер картинки */
+        height: 30px;
+        object-fit: contain;
+    }
 }
 
 .select-option:hover {
     background: #f0f0f0;
-}
-
-/* Картинки в выпадающем списке */
-.select-option img {
-    width: 30px; /* Размер картинки */
-    height: 30px;
-    object-fit: contain;
 }
 
 /* стили для grid */
@@ -196,13 +197,12 @@ body {
 
 .select-option-grid:hover {
     background: #f0f0f0;
-}
 
-/* Картинки в выпадающем списке */
-.select-option-grid img {
-    width: 30px; /* Размер картинки */
-    height: 30px;
-    object-fit: contain;
+    img {
+        width: 30px; /* Размер картинки */
+        height: 30px;
+        object-fit: contain;
+    }
 }
 
 .modalka {

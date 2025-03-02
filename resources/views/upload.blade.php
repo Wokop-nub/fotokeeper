@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/gallery.css">
     <script defer src="/js/gallery/calendar.js"></script>
-    <script defer src="/js/gallery/grid.js"></script>
+    {{-- <script defer src="/js/gallery/grid.js"></script> --}}
     <script defer src="/js/gallery/context-menu.js"></script>
     <script defer src="/js/modal.js"></script>
 @endsection
@@ -25,36 +25,19 @@
                     <div class="select-dropdown">
                         <div class="select-option" data-value="option1">
                             <img src="/img/calendar-new.svg" alt="Option 1" />
-                            <span>Обычный</span>
+                            <span>С новых фотографий</span>
                         </div>
                         <div class="select-option" data-value="option2">
                             <img src="/img/calendar-old.svg" alt="Option 2" />
-                            <span>произвольный</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="custom-select-grid">
-                    <!-- Картинка, на которую нажимаем -->
-                    <div class="select-toggle-grid">
-                        <img id="selected-image-grid" src="/img/grid-icon.svg" alt="Selected-grid" />
-                    </div>
-                    <!-- Выпадающий список -->
-                    <div class="select-dropdown-grid">
-                        <div class="select-option-grid" data-value="option3">
-                            <img src="/img/grid-normal.svg" alt="Option 3" />
-                            <span>С новых фотографий</span>
-                        </div>
-                        <div class="select-option-grid" data-value="option4">
-                            <img src="/img/grid-arbitrarily.svg" alt="Option 4" />
                             <span>С старых фотографий</span>
                         </div>
                     </div>
                 </div>
+                <form id="upload-form" action="/api/photo/upload" method="POST" enctype="multipart/form-data">
+                    <input type="file" id="photo-upload" name="file[]" accept="image/*" style="display: none" onchange="this.form.submit()" multiple/>
+                    <label class="upload-button" type="button" for="photo-upload">загрузить</label>
+                </form>
             </div>
-            <form id="upload-form" action="/api/photo/upload" method="POST" enctype="multipart/form-data">
-                <input type="file" id="photo-upload" name="file[]" accept="image/*" style="display: none" onchange="this.form.submit()" multiple/>
-                <label class="upload-button" type="button" for="photo-upload">загрузить</label>
-            </form>
         </div>
 
         <div class="grid-container">

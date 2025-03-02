@@ -104,10 +104,11 @@ body {
     text-decoration: none;
     color: #fff;
     text-align: center;
-}
-.album a {
-    text-decoration: none;
-    color: #fff;
+
+    a {
+        text-decoration: none;
+        color: #fff;
+    }
 }
 .fixed-thumbnail {
     background-size: 17%;
@@ -198,38 +199,39 @@ body.modalka-open {
     overflow: hidden;
 }
 
-.input-file-row {
-    display: inline-block;
-}
 .input-file {
     position: relative;
     display: flex;
-}
-.input-file span {
-    position: relative;
-    cursor: pointer;
-    outline: none;
-    text-decoration: none;
-    font-size: 14px;
-    color: #000000;
-    text-align: center;
-    background-color: #707070;
-    padding: 10px 20px;
-    width: 100%;
-    box-sizing: border-box;
-    border: none;
-    margin: 0;
-}
-.input-file input[type="file"] {
-    position: absolute;
-    z-index: -1;
-    opacity: 0;
-    display: block;
-    width: 0;
-    height: 0;
+
+    span {
+        position: relative;
+        cursor: pointer;
+        outline: none;
+        text-decoration: none;
+        font-size: 14px;
+        color: #000000;
+        text-align: center;
+        background-color: #707070;
+        padding: 10px 20px;
+        width: 100%;
+        box-sizing: border-box;
+        border: none;
+        margin: 0;
+    }
+    input[type="file"] {
+        position: absolute;
+        z-index: -1;
+        opacity: 0;
+        display: block;
+        width: 0;
+        height: 0;
+    }
 }
 
 /* Список файлов */
+.input-file-row {
+    display: inline-block;
+}
 .input-file-list {
     display: flex;
     flex-direction: column;
