@@ -15,14 +15,13 @@ class PhotoController extends Controller
     {
         $request->validate([
             'file.*' => 'required|image|mimes:jpeg,png,jpg,gif',
-            'album' => 'nullable|string|filled'
+            'id' => 'nullable|string|filled'
         ]);
 
-        $album = ($request->has('album')) ?
+        $album = ($request->has('id')) ?
             Album::query()
             ->where('user_id', Auth::id())
-            ->where('alias', $request->album)
-            ->first()
+            ->find($request->id)
             ->id :
             null;
 

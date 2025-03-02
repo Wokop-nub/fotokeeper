@@ -59,7 +59,12 @@ class PageController extends Controller
             $photos = $parent->photos()->get();
         }
 
-        return view('album', ['alias' => last($segments), 'albums' => $albums, 'photos' => $photos]);
+        return view('album', [
+            'alias' => last($segments),
+            'albums' => $albums,
+            'photos' => $photos,
+            'id' => $parent->id
+        ]);
     }
 
     public function upload(): View
