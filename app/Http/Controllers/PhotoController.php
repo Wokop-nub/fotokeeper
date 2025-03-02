@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Photo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class PhotoController extends Controller
@@ -16,15 +17,15 @@ class PhotoController extends Controller
 
         // Сохранение файла на сервере
         $file = $request->file('photo');
-        $filename = time() . '_' . $file->getClientOriginalName();
-        $file->move(public_path('uploads'), $filename);
+        $path = $file->store('uploads', 'public');
 
         // Сохранение данных в базе
-        $photo = new Photo();
-        $photo->filename = $filename;
-        $photo->save();
+        Photo::create([
+            'user_id' => Auth::id(),
+            'filename' => basename($path)
+        ]);
 
-        return redirect('/index')->with('success', 'Фотография успешно загружена!');
+        return redirect('/upload')->with('success', 'Фотография успешно загружена!');
     }
 
     public function destroy($id)

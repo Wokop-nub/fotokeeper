@@ -107,6 +107,7 @@ class AlbumController extends Controller
 
             // Создаем запись о файле в базе данных
             $album->photos()->create([
+                'user_id' => Auth::id(),
                 'filename' => basename($path), // Сохраняем имя файла
             ]);
         }

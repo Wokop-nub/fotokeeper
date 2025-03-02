@@ -50,7 +50,7 @@
                 </div>
             </div>
         </div>
-        <form id="upload-form" action="/api" method="POST" enctype="multipart/form-data">
+        <form id="upload-form" action="/api/photo/upload" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="file" id="photo-upload" name="photo" accept="image/*"
                 style="height: 0; width: 0; opacity: 0;" />
