@@ -159,3 +159,45 @@ main {
     flex-direction: row;
     gap: 20px;
 }
+
+aside {
+    min-width: 250px;
+
+    > div {
+        position: fixed;
+    }
+}
+ul.provider {
+    overflow: auto;
+    max-width: 250px;
+    height: calc(100vh - 200px);
+
+    ul {
+        margin-left: 20px; /* Отступ для каждого уровня вложенности */
+    }
+    li {
+        cursor: pointer;
+        list-style: none;
+        padding: 5px 0;
+    }
+    li:hover {
+        background: #0000001e;
+    }
+    .hidden {
+        display: none;
+    }
+    .album-header {
+        height: 22px;
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: center;
+        gap: 5px;
+    }
+    .album-photos li {
+        height: 50px;
+    }
+    img {
+        height: 100%;
+    }
+}

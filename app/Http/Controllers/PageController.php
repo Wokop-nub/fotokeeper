@@ -69,6 +69,11 @@ class PageController extends Controller
             ->whereNull('album_id')
             ->get();
 
-        return view('upload', ['photos' => $photos]);
+        $albums = Album::query()
+            ->where('user_id', Auth::id())
+            ->whereNull('parent_id')
+            ->get();
+
+        return view('upload', ['photos' => $photos, 'albums' => $albums]);
     }
 }

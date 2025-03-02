@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/gallery.css">
     <script defer src="/js/gallery/calendar.js"></script>
-    {{-- <script defer src="/js/gallery/grid.js"></script> --}}
+    <script defer src="/js/gallery/provider.js"></script>
     <script defer src="/js/gallery/context-menu.js"></script>
     <script defer src="/js/modal.js"></script>
 @endsection
@@ -14,31 +14,58 @@
         'active'=>1
     ])
     <main class="main">
-        <div>
-            <div class="toolbar">
-                <div class="custom-select">
-                    <!-- Картинка, на которую нажимаем -->
-                    <div class="select-toggle">
-                        <img id="selected-image" src="/img/calendar-icon.svg" alt="Selected" />
-                    </div>
-                    <!-- Выпадающий список -->
-                    <div class="select-dropdown">
-                        <div class="select-option" data-value="option1">
-                            <img src="/img/calendar-new.svg" alt="Option 1" />
-                            <span>С новых фотографий</span>
+        <aside>
+            <div>
+                <div class="toolbar">
+                    <div class="custom-select">
+                        <!-- Картинка, на которую нажимаем -->
+                        <div class="select-toggle">
+                            <img id="selected-image" src="/img/calendar-icon.svg" alt="Selected" />
                         </div>
-                        <div class="select-option" data-value="option2">
-                            <img src="/img/calendar-old.svg" alt="Option 2" />
-                            <span>С старых фотографий</span>
+                        <!-- Выпадающий список -->
+                        <div class="select-dropdown">
+                            <div class="select-option" data-value="option1">
+                                <img src="/img/calendar-new.svg" alt="Option 1" />
+                                <span>С новых фотографий</span>
+                            </div>
+                            <div class="select-option" data-value="option2">
+                                <img src="/img/calendar-old.svg" alt="Option 2" />
+                                <span>С старых фотографий</span>
+                            </div>
                         </div>
                     </div>
+                    <form id="upload-form" action="/api/photo/upload" method="POST" enctype="multipart/form-data">
+                        <input type="file" id="photo-upload" name="file[]" accept="image/*" style="display: none" onchange="this.form.submit()" multiple/>
+                        <label class="upload-button" type="button" for="photo-upload">загрузить</label>
+                    </form>
                 </div>
-                <form id="upload-form" action="/api/photo/upload" method="POST" enctype="multipart/form-data">
-                    <input type="file" id="photo-upload" name="file[]" accept="image/*" style="display: none" onchange="this.form.submit()" multiple/>
-                    <label class="upload-button" type="button" for="photo-upload">загрузить</label>
-                </form>
+
+                <ul class="provider">
+                    @foreach ($albums as $album)
+                        <li>
+                            <div class="album-header" data-album-id="{{ $album->id }}">
+                                <span class="toggle-icon">▶</span>
+                                {{ $album->name }}
+                            </div>
+                            <div class="hidden">
+                                @if (isset($album->child) && count($album->child) > 0)
+                                    <ul class="album-children">
+                                        @include('block.albumTree', ['albums' => $album->child])
+                                    </ul>
+                                @endif
+                                @if ($album->photos && count($album->photos) > 0)
+                                    <ul class="album-photos">
+                                        @foreach ($album->photos as $photo)
+                                            <li><img src="/storage/uploads/{{ $photo->filename }}" alt=""></li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
             </div>
-        </div>
+        </aside>
 
         <div class="grid-container">
             @isset($photos)

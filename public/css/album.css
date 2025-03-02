@@ -18,6 +18,11 @@ body {
     align-items: center;
     padding: 10px 97px;
     background-color: #000;
+    z-index: 500;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 .logo {
@@ -51,6 +56,7 @@ body {
 /* Основная часть */
 .main {
     padding: 20px;
+    margin-top: 100px;
 }
 
 /* Панель инструментов */
