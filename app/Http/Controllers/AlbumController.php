@@ -97,12 +97,11 @@ class AlbumController extends Controller
     {
         $request->validate([
             'id' => 'required|integer|min:1',
-            'file.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Максимальный размер 2 МБ
+            'file.*' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         $album = Album::find($request->id);
         foreach ($request->file('file') as $file) {
-            // Сохраняем файл в папку storage/app/public/uploads
             $path = $file->store('uploads', 'public');
 
             // Создаем запись о файле в базе данных

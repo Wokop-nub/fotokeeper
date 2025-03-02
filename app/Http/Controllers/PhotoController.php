@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Album;
 use App\Models\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -13,20 +14,34 @@ class PhotoController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'file.*' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'album' => 'nullable|string|filled'
         ]);
 
-        // Сохранение файла на сервере
-        $file = $request->file('photo');
-        $path = $file->store('uploads', 'public');
+        $album = ($request->has('album')) ?
+            Album::query()
+            ->where('user_id', Auth::id())
+            ->where('alias', $request->album)
+            ->first()
+            ->id :
+            null;
 
-        // Сохранение данных в базе
-        Photo::create([
-            'user_id' => Auth::id(),
-            'filename' => basename($path)
-        ]);
 
-        return redirect('/upload')->with('success', 'Фотография успешно загружена!');
+        foreach ($request->file as $file) {
+            // Сохранение файла на сервере
+            $path = $file->store('uploads', 'public');
+
+            // Сохранение данных в базе
+            Photo::create([
+                'user_id' => Auth::id(),
+                'filename' => basename($path),
+                'album_id' => $album
+            ]);
+        }
+
+        return ($album == null) ?
+            redirect('/upload') :
+            redirect()->back();
     }
 
     public function destroy(Request $request): Response

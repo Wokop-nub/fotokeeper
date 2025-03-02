@@ -52,7 +52,7 @@
                 </div>
             </div>
             <form id="upload-form" action="/api/photo/upload" method="POST" enctype="multipart/form-data">
-                <input type="file" id="photo-upload" name="photo" accept="image/*" style="display: none" onchange="this.form.submit()"/>
+                <input type="file" id="photo-upload" name="file[]" accept="image/*" style="display: none" onchange="this.form.submit()" multiple/>
                 <label class="upload-button" type="button" for="photo-upload">загрузить</label>
             </form>
         </div>
@@ -63,6 +63,7 @@
                     <div class="photo"
                         oncontextmenu="return false;"
                         style="background-image: url('/storage/uploads/{{$photo->filename}}')"
+                        data-photo-id="{{$photo->id}}"
                     >
                         <img src="/storage/uploads/{{$photo->filename}}" alt="Photo" data-photo-id="{{ $photo->id }}"
                             data-filename="{{ $photo->filename }}">

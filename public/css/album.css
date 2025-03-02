@@ -59,7 +59,8 @@ body {
     gap: 10px;
     margin-bottom: 20px;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: start;
 }
 
 .icon-button {
@@ -91,7 +92,6 @@ body {
     font-size: 23px;
 }
 
-/* Список альбомов */
 /* Список альбомов */
 .albums {
     display: grid;
