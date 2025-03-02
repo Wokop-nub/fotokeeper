@@ -183,16 +183,15 @@ body {
         padding: 20px;
         z-index: 1000;
     }
-}
 
-.modalka input {
-    padding: 10px;
-    margin-bottom: 10px;
-    width: 100%;
-}
-
-.modalka button {
-    padding: 10px 20px;
+    input {
+        padding: 10px;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    button {
+        padding: 10px 20px;
+    }
 }
 
 body.modalka-open {

@@ -1,91 +1,81 @@
-/* .gallery{
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background: #f4f4f9;
-} */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-}
-/* .photo-item {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    overflow: hidden;
-    background: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-} */
-/* .photo-item img {
     width: 100%;
-    height: auto;
-    display: block;
-} */
+    > .photo {
+        border-radius: 10px;
+    }
+}
+.photo {
+    position: relative;
+
+    max-height: 250px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: 1px solid #000;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: inherit;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        filter: blur(10px);
+        z-index: 0;
+    }
+
+    img {
+        height: 100%;
+        z-index: 1;
+    }
+}
 form {
     margin-bottom: 30px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
-form input[type="file"] {
-    margin-bottom: 10px;
-}
-form button {
-    padding: 10px 20px;
-    background: #8e8e8e;
-    color: white;
+.upload-button {
+    padding: 10px 0;
+    width: 100%;
+    background-color: #fff;
+    color: #000;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-form button:hover {
-    background: #8e8e8e;
-}
+    font-size: 16px;
 
-/* Контейнер для фотографий */
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 колонки */
-    gap: 10px; /* Расстояние между фотографиями */
-    width: 100%; /* Ширина контейнера */
-    max-width: 800px; /* Максимальная ширина контейнера */
-    margin: 0 auto; /* Центрирование контейнера */
-}
-
-/* Стили для каждого элемента фотографии */
-.photo-item {
-    width: 100%; /* Ширина элемента */
-    aspect-ratio: 1 / 1; /* Соотношение сторон 1:1 (квадрат) */
-    display: flex;
-    justify-content: center; /* Центрирование по горизонтали */
-    align-items: center; /* Центрирование по вертикали */
-    border-radius: 8px; /* Закругленные углы */
-    overflow: hidden; /* Скрыть части изображения, выходящие за пределы */
-}
-
-/* Стили для фотографий */
-.photo-item img {
-    width: 100%; /* Ширина фотографии равна ширине контейнера */
-    height: 100%; /* Высота фотографии равна высоте контейнера */
-    object-fit: contain; /* Вписать изображение без обрезки */
-}
-.photo-item title{
-    font-size: 10px;
-}
-.context-menu {
-    position: absolute;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    z-index: 1000;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.context-menu.hidden {
+#context-menu {
     display: none;
+    flex-direction: column;
+    position: absolute;
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    left: 491px;
+    top: 442px;
+    flex-direction: column;
+    align-items: flex-start;
+    color: #000;
+    z-index: 1000;
 }
 
 .context-menu-item {
@@ -113,8 +103,6 @@ form button:hover {
     border: 1px solid #ccc;
 }
 
-
-
 #rename-form-container {
     display: none;
     position: absolute;
@@ -137,25 +125,12 @@ form button:hover {
     gap: 3;
     margin-top: 5px;
 }
-.context-menu-btn{
+.context-menu-btn {
     background-color: #ffffff;
     border: none;
     display: flex;
 }
-#context-menu{
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    background: white;
-    border-radius: 10px;
-    padding: 10px;
-    left: 491px;
-    top: 442px;
-    flex-direction: column;
-    align-items: flex-start;
-    color: #000;
-}
-#rename-form-container{
+#rename-form-container {
     display: none;
     position: absolute;
     background: white;
@@ -176,4 +151,10 @@ form button:hover {
     font-size: 14px; /* Размер текста */
     white-space: nowrap; /* Текст в одну строку */
     z-index: 1000; /* Убедитесь, что подсказка поверх других элементов */
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }

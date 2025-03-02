@@ -26,8 +26,7 @@ Route::post('/signin', [UserController::class, 'signin']);
 
 Route::group(['prefix' => '/photo'], function () {
     Route::post('/upload', [PhotoController::class, 'create']);
-    Route::delete('/delete/{id}', [PhotoController::class, 'destroy']);
-    Route::put('/rename/{id}', [PhotoController::class, 'rename']);
+    Route::delete('/delete', [PhotoController::class, 'destroy']);
 });
 
 Route::group(['prefix' => '/album'], function () {

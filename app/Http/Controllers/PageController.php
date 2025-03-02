@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
 use App\Models\Album;
+use App\Models\Photo;
 use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
@@ -63,6 +64,11 @@ class PageController extends Controller
 
     public function upload(): View
     {
-        return view('upload');
+        $photos = Photo::query()
+            ->where('user_id', Auth::id())
+            ->whereNull('album_id')
+            ->get();
+
+        return view('upload', ['photos' => $photos]);
     }
 }

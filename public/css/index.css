@@ -95,33 +95,6 @@ body {
     background-repeat: no-repeat;
 }
 
-.upload-button {
-    padding: 10px 100px;
-    background-color: #fff;
-    color: #000;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-/* Галерея */
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-}
-
-.gallery-item {
-    width: 100%;
-    height: 200px;
-    background-size: cover;
-    background-position: center;
-    border-radius: 5px;
-}
-
-/* стили для календаря */
-
 /* Основной контейнер */
 .custom-select {
     position: relative;
@@ -230,4 +203,40 @@ body {
     width: 30px; /* Размер картинки */
     height: 30px;
     object-fit: contain;
+}
+
+.modalka {
+    display: none;
+    position: fixed;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000085;
+
+    form {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        z-index: 1000;
+    }
+
+    input {
+        padding: 10px;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    button {
+        padding: 10px 20px;
+    }
+}
+
+body.modalka-open {
+    overflow: hidden;
 }
