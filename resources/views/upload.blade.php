@@ -21,18 +21,18 @@
                     <div class="custom-select">
                         <!-- Картинка, на которую нажимаем -->
                         <div class="select-toggle">
-                            <img id="selected-image" src="/img/calendar-icon.svg" alt="Selected" />
+                            <img id="selected-image" src="{{request()->has('sort')? '/img/calendar-old.svg': '/img/calendar-new.svg'}}" alt="" />
                         </div>
                         <!-- Выпадающий список -->
                         <div class="select-dropdown">
-                            <div class="select-option" data-value="option1">
-                                <img src="/img/calendar-new.svg" alt="Option 1" />
+                            <a class="select-option" href="{{request()->url()}}">
+                                <img src="/img/calendar-new.svg" alt="" />
                                 <span>С новых фотографий</span>
-                            </div>
-                            <div class="select-option" data-value="option2">
-                                <img src="/img/calendar-old.svg" alt="Option 2" />
+                            </a>
+                            <a class="select-option" href="{{request()->url()}}?sort=desc">
+                                <img src="/img/calendar-old.svg" alt="" />
                                 <span>С старых фотографий</span>
-                            </div>
+                            </a>
                         </div>
                     </div>
                     <form id="upload-form" action="/api/photo/upload" method="POST" enctype="multipart/form-data">

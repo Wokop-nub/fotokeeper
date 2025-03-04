@@ -72,6 +72,7 @@ class PageController extends Controller
         $photos = Photo::query()
             ->where('user_id', Auth::id())
             ->whereNull('album_id')
+            ->orderBy('created_at', request()->input('sort', 'asc'))
             ->get();
 
         $albums = Album::query()
