@@ -20,7 +20,7 @@ document
 
         if (result.status == true) {
             // Успешная отправка
-            window.location.href = "/";
+            location.reload();
         } else {
             // Обрабатываем ошибки валидации
             alert(result.massage);

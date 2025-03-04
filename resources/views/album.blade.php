@@ -35,7 +35,7 @@
             @else
                 @foreach ($albums as $album)
                     <div class="album" data-album-id="{{ $album->id }}">
-                        <a href="{{ request()->url().'/'.$album->alias }}">
+                        <a href="{{ (isset($alias) and $alias == Auth::user()->name.'_trash') ? '#' : request()->url().'/'.$album->alias}}">
                             <div class="album-thumbnail"
                                 style="background-image: url('{{ $album->photos->first() ? '/storage/uploads/' . $album->photos->first()->filename : '/img/default-album.svg' }}');">
                             </div>
