@@ -1,7 +1,7 @@
 import { renameAlbum } from "./album-rename.js";
 import { deleteAlbum } from "./album-delete.js";
 import { uploadFile } from "./album-upload.js";
-const contextMenu = document.getElementById("context-menu");
+const contextMenu = document.querySelector(".context-menu#albumContext");
 const renameForm = document.querySelector("#rename-album");
 const deleteForm = document.querySelector("#delete-album");
 const uploadForm = document.querySelector("#upload-album");
@@ -11,6 +11,8 @@ let selectedAlbumId = null;
 // Показываем контекстное меню при клике правой кнопкой мыши
 document.addEventListener("contextmenu", (event) => {
     event.preventDefault();
+
+    contextMenu.style.display = "none";
     if (event.target.closest(".album")) {
         selectedAlbumId = event.target.closest(".album").dataset.albumId;
         contextMenu.style.display = "block";

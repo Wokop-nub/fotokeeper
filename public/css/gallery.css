@@ -64,7 +64,7 @@ form {
     justify-content: center;
 }
 
-#context-menu {
+.context-menu {
     display: none;
     flex-direction: column;
     position: absolute;

@@ -9,6 +9,7 @@
     <script type="module" defer src="/js/album/album-rename.js"></script>
     <script type="module" defer src="/js/album/album-upload.js"></script>
     <script type="module" defer src="/js/album/create.js"></script>
+    <script defer src="/js/gallery/context-menu.js"></script>
 @endsection
 
 @section('mainContent')
@@ -45,9 +46,8 @@
 
                 @isset($photos)
                     @foreach ($photos as $photo)
-                        <div class="photo"
-                            style="background-image: url('/storage/uploads/{{$photo->filename}}')">
-                            <img src="/storage/uploads/{{$photo->filename}}" alt="">
+                        <div class="photo" oncontextmenu="return false;" data-photo-id="{{ $photo->id }}" style="background-image: url('/storage/uploads/{{$photo->filename}}')">
+                            <img src="/storage/uploads/{{$photo->filename}}" alt="" data-photo-id="{{ $photo->id }}">
                         </div>
                     @endforeach
                 @endisset
@@ -74,6 +74,12 @@
                     <input type="hidden" name="parent" value="{{$alias}}" readonly>
                 @endisset
                 <button type="submit">Создать</button>
+            </form>
+        </div>
+
+        <div class="modalka" id="delete-photo-modal">
+            <form action="/api/album/rename" method="POST" id="delete-photo">
+                <button type="submit">Удалить</button>
             </form>
         </div>
     </main>

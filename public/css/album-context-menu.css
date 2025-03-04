@@ -1,4 +1,4 @@
-#context-menu {
+.context-menu {
     display: none;
     position: absolute;
     background: white;
@@ -8,7 +8,7 @@
     z-index: 1000;
 }
 
-#context-menu button {
+.context-menu button {
     display: block;
     width: 100%;
     padding: 5px;
@@ -19,6 +19,6 @@
     cursor: pointer;
 }
 
-#context-menu button:hover {
+.context-menu button:hover {
     background: #f0f0f0;
 }

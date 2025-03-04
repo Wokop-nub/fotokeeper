@@ -1,8 +1,13 @@
 <!-- Контекстное меню -->
-<div id="context-menu" style="position: absolute; background: white; border: 1px solid #ccc; padding: 10px;">
+<div class="context-menu" id="albumContext" style="position: absolute; background: white; border: 1px solid #ccc; padding: 10px;">
     <button class="openModalBtn" data-modal="upload-album-modal">Добавить фотографию</button>
     <button class="openModalBtn" data-modal="rename-album-modal">Переименовать альбом</button>
     <button class="openModalBtn" data-modal="delete-album-modal">Удалить альбом</button>
+</div>
+
+<div id="photoContext" class="context-menu">
+    <button class="context-menu-btn openModalBtn" data-modal="delete-photo-modal">удалить</button>
+    {{-- <button id="rename-button" class="context-menu-btn">переименовать</button> --}}
 </div>
 
 <div class="modalka" id="upload-album-modal">

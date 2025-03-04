@@ -87,7 +87,7 @@
             @endisset
         </div>
 
-        <div id="context-menu">
+        <div id="photoContext" class="context-menu">
             <button class="context-menu-btn openModalBtn" data-modal="delete-photo-modal">удалить</button>
             {{-- <button id="rename-button" class="context-menu-btn">переименовать</button> --}}
         </div>

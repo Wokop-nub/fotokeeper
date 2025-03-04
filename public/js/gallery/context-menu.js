@@ -1,4 +1,4 @@
-const contextMenu = document.getElementById("context-menu");
+const contextMenu = document.querySelector(".context-menu#photoContext");
 const deleteForm = document.getElementById("delete-photo");
 let selectedPhoto = null;
 
@@ -6,8 +6,10 @@ let selectedPhoto = null;
 document.addEventListener("contextmenu", function (event) {
     event.preventDefault();
 
+    contextMenu.style.display = "none";
     if (event.target.closest(".photo")) {
         selectedPhoto = event.target.dataset.photoId;
+        console.log(event.target);
         contextMenu.style.display = "flex";
         contextMenu.style.left = `${event.pageX}px`;
         contextMenu.style.top = `${event.pageY}px`;
@@ -22,7 +24,7 @@ document.addEventListener("click", function () {
 // Обработка удаления фотографии (если нужно)
 deleteForm.addEventListener("submit", function (event) {
     event.preventDefault();
-    fetch("api/photo/delete", {
+    fetch("/api/photo/delete", {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
