@@ -14,12 +14,9 @@ async function renameAlbum(form, id) {
     const result = await response.json();
 
     if (result.status == true) {
-        // Успешная отправка
         location.reload();
     } else {
-        // Обрабатываем ошибки валидации
-        console.log(result);
-        alert(result);
+        alert(result.message);
     }
 }
 

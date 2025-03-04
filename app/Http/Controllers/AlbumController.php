@@ -68,7 +68,21 @@ class AlbumController extends Controller
         ]);
 
         $album = Album::find($request->id);
-        $album->update($request->only('name'));
+        $alias = Str::slug($request->name);
+
+        $brothers =($album->parent_id != null)?
+            $album->parent()->child():
+            Album::query()
+                ->whereNull('parent_id')
+                ->where('user_id', Auth::id());
+
+        if($brothers->where('alias', $alias)->first() != null)
+            return response(['status'=>false, 'message'=>'name already taken'], 400);
+
+        $album->update([
+            'name' => $request->name,
+            'alias' => $alias
+        ]);
 
         return response(['status' => true]);
     }
