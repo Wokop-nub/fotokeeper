@@ -11,7 +11,6 @@ use Illuminate\Support\Str;
 
 class AlbumController extends Controller
 {
-    // Создание нового альбома
     public function create(Request $request): Response
     {
         $request->validate([
@@ -111,5 +110,29 @@ class AlbumController extends Controller
             ]);
         }
         return response(['status' => true]);
+    }
+
+    public function moving(Request $request): Response {
+        $request->validate([
+            'id' => 'required|integer|min:1',
+            'albumId' => 'required|integer|min:1'
+        ]);
+
+        $movable = Album::find($request->id);
+        if($movable == null)
+            return response(['status'=>false, 'message'=>'movable not found'], 404);
+        if($movable->name == 'Корзина')
+            return response(['status'=>false, 'message'=>'Корзину нельзя перемещать'], 403);
+
+        $target = Album::find($request->albumId);
+        if($target == null)
+            return response(['status'=>false, 'message'=>'target album not found'], 404);
+        if($target->child()->where('alias', $movable->alias)->first() != null)
+            return response(['status'=>false, 'message'=>"in target album already exist album with name $movable->name"], 403);
+
+        $movable->update([
+            'parent_id' => $target->id
+        ]);
+        return response(['status'=>true]);
     }
 }
