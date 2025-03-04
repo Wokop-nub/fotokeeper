@@ -3,6 +3,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     width: 100%;
+    min-height: calc(100vh - 130px);
     > .photo {
         border-radius: 10px;
     }

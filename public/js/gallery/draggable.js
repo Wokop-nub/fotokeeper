@@ -78,6 +78,22 @@ class File extends Draggable {
 
         this.sendRequest(url, data);
     }
+
+    handleDragEnd() {
+        this.element.style.opacity = "1";
+        document.removeEventListener("dragover", this.trackHoveredElement);
+
+        // Проверяем, был ли элемент отпущен над альбомом
+        if (this.lastHoveredTarget?.closest(".album-header")) {
+            const targetAlbumId =
+                this.lastHoveredTarget.closest(".album-header").dataset.albumId;
+            this.request(targetAlbumId);
+        } else if (this.lastHoveredTarget?.closest(".grid-container")) {
+            this.request(null);
+        }
+
+        this.lastHoveredTarget = null;
+    }
 }
 
 class Album extends Draggable {

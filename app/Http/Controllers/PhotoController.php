@@ -15,7 +15,7 @@ class PhotoController extends Controller
     {
         $request->validate([
             'file.*' => 'required|image|mimes:jpeg,png,jpg,gif',
-            'id' => 'nullable|string|filled'
+            'id' => 'nullable|integer|min:1'
         ]);
 
         $album = ($request->has('id')) ?
@@ -54,5 +54,31 @@ class PhotoController extends Controller
         $photo->delete();
 
         return response(['status' => true]);
+    }
+
+    public function moving(Request $request): Response {
+        $request->validate([
+            'id' => 'required|integer|min:1',
+            'albumId' => 'nullable|integer|min:1'
+        ]);
+
+        $photo = Photo::find($request->id);
+        if($photo == null)
+            return response(['status'=>false, 'message'=>'Photo not found'], 404);
+
+        if($request->has('albumId') and $request->albumId != null){
+            if(Album::find($request->albumId) != null){
+                $photo->update([
+                    'album_id'=>$request->albumId
+                ]);
+                return response(['status'=>true]);
+            }
+            else
+                return response(['status'=>false, 'message'=>'Album not found'], 404);
+        }
+        $photo->update([
+            'album_id'=>null
+        ]);
+        return response(['status'=>true]);
     }
 }

@@ -27,6 +27,7 @@ Route::post('/signin', [UserController::class, 'signin']);
 Route::group(['prefix' => '/photo'], function () {
     Route::post('/upload', [PhotoController::class, 'create']);
     Route::delete('/delete', [PhotoController::class, 'destroy']);
+    Route::post('/moving', [PhotoController::class, 'moving']);
 });
 
 Route::group(['prefix' => '/album'], function () {
@@ -34,4 +35,5 @@ Route::group(['prefix' => '/album'], function () {
     Route::put('/rename', [AlbumController::class, 'rename']);
     Route::post('/move-to-trash', [AlbumController::class, 'moveToTrash']);
     Route::post('/upload', [AlbumController::class, 'uploadPhoto']);
+    Route::post('/moving', [AlbumController::class, 'moving']);
 });
