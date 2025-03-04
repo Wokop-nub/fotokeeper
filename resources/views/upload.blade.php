@@ -6,7 +6,8 @@
     <script defer src="/js/gallery/calendar.js"></script>
     <script defer src="/js/gallery/provider.js"></script>
     <script defer src="/js/gallery/context-menu.js"></script>
-    <script defer src="/js/modal.js"></script>
+    <script defer type="model" src="/js/modal.js"></script>
+    <script defer src="/js/gallery/draggable.js"></script>
 @endsection
 
 @section('mainContent')
@@ -49,14 +50,17 @@
                             </div>
                             <div class="hidden">
                                 @if (isset($album->child) && count($album->child) > 0)
-                                    <ul class="album-children">
-                                        @include('block.albumTree', ['albums' => $album->child])
-                                    </ul>
+                                    @include('block.albumTree', ['albums' => $album->child])
                                 @endif
                                 @if ($album->photos && count($album->photos) > 0)
                                     <ul class="album-photos">
                                         @foreach ($album->photos as $photo)
-                                            <li><img src="/storage/uploads/{{ $photo->filename }}" alt=""></li>
+                                            <li><img
+                                                src="/storage/uploads/{{ $photo->filename }}"
+                                                alt=""
+                                                data-photo-id="{{$photo->id}}"
+                                                draggable="true"
+                                            ></li>
                                         @endforeach
                                     </ul>
                                 @endif
