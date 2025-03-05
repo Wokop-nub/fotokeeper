@@ -20,13 +20,17 @@
         <div class="toolbar">
             @isset($alias)
                 <a href="{{ '/' . implode('/', array_slice(explode('/', request()->path()), 0, -1)) }}" class="create-album-button">Назад</a>
-                <form id="upload-form" action="/api/photo/upload" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="id" value="{{$id}}">
-                    <input type="file" id="photo-upload" name="file[]" accept="image/*" style="display: none" onchange="this.form.submit()" multiple/>
-                    <label class="create-album-button" type="button" for="photo-upload">Загрузить фотки</label>
-                </form>
+                @if (!isset($alias) or $alias != Auth::user()->name.'_trash')
+                    <form id="upload-form" action="/api/photo/upload" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="{{$id}}">
+                        <input type="file" id="photo-upload" name="file[]" accept="image/*" style="display: none" onchange="this.form.submit()" multiple/>
+                        <label class="create-album-button" type="button" for="photo-upload">Загрузить фотки</label>
+                    </form>
+                @endif
             @endisset
-            <button class="create-album-button openModalBtn" data-modal="create-album-modal">Cоздать альбом</button>
+            @if (!isset($alias) or $alias != Auth::user()->name.'_trash')
+                <button class="create-album-button openModalBtn" data-modal="create-album-modal">Cоздать альбом</button>
+            @endif
         </div>
 
         <div class="albums">
