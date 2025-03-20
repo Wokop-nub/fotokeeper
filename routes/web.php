@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,7 @@ Route::get('/login', function () {
 Route::get('/signin', function () {
     return view('auth/signin');
 });
+Route::get('logout', [UserController::class, 'logout']);
 
 Route::get('/album', [PageController::class, 'mainAlbum']);
 Route::get('/album/{path?}', [PageController::class, 'album'])->where('path', '.*');

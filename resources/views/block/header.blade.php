@@ -9,5 +9,9 @@
             <img src="/img/album-icon-{{(isset($active) and $active==2)?'active':'passive'}}.svg" alt="album">
             Альбомы
         </a>
+        <a href="/logout" class="nav-link active">
+            <img src="/img/logout.svg" alt="album">
+            Выход
+        </a>
     </nav>
 </header>
